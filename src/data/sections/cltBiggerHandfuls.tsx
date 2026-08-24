@@ -37,7 +37,7 @@ export const cltBiggerHandfulsBlocks: ReactElement[] = [
 
     <StackLayout key="layout-bigger-handfuls-invite" maxWidth="xl">
         <Block id="bigger-handfuls-invite" padding="sm">
-            <EditableParagraph id="para-bigger-handfuls-invite" blockId="bigger-handfuls-invite">With handfuls of two, one very slow runner drags the average a long way, while in a handful of thirty that same runner is diluted by twenty-nine others. So draw the shape you expect straight onto the empty chart, then release two hundred handfuls and see how close you were.</EditableParagraph>
+            <EditableParagraph id="para-bigger-handfuls-invite" blockId="bigger-handfuls-invite">With handfuls of two, one very slow runner drags the average a long way, while in a handful of thirty that same runner is diluted by twenty-nine others. So draw the shape you expect straight onto the empty chart, then release two hundred handfuls and see how close you were. /</EditableParagraph>
         </Block>
     </StackLayout>,
 
