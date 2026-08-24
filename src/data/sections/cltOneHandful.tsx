@@ -1,8 +1,23 @@
 import { type ReactElement } from "react";
 import { Block } from "@/components/templates";
 import { StackLayout } from "@/components/layouts";
-import { EditableH2, EditableParagraph } from "@/components/atoms";
-import { VisualOptionCards } from "@/components/organisms";
+import {
+    EditableH2,
+    EditableParagraph,
+    InlineScrubbleNumber,
+    InlineClozeInput,
+    InlineClozeChoice,
+    InlineLinkedHighlight,
+    InlineFeedback,
+} from "@/components/atoms";
+import {
+    getVariableInfo,
+    numberPropsFromDefinition,
+    clozePropsFromDefinition,
+    choicePropsFromDefinition,
+    linkedHighlightPropsFromDefinition,
+} from "../variables";
+import { SprintSamplePredictionFigure } from "./figures/SprintSamplePredictionFigure";
 
 export const cltOneHandfulBlocks: ReactElement[] = [
     <StackLayout key="layout-one-handful-heading" maxWidth="xl">
@@ -16,64 +31,126 @@ export const cltOneHandfulBlocks: ReactElement[] = [
     <StackLayout key="layout-one-handful-setup" maxWidth="xl">
         <Block id="one-handful-setup" padding="sm">
             <EditableParagraph id="para-one-handful-setup" blockId="one-handful-setup">
-                Suppose the true average time across the whole school is 15.2 seconds. Nobody knows that
-                number yet. The only way in is to pick a few runners and work out their average.
+                Suppose the true average across the whole school is 15.2 seconds, though nobody knows that
+                yet. Take five runners: 14.1, 16.8, 15.0, 13.9 and 17.2 seconds add to 77.0, so their
+                average is 15.4 seconds. Close, but not equal.
             </EditableParagraph>
         </Block>
     </StackLayout>,
 
-    <StackLayout key="layout-one-handful-worked-example" maxWidth="xl">
-        <Block id="one-handful-worked-example" padding="sm">
-            <EditableParagraph id="para-one-handful-worked-example" blockId="one-handful-worked-example">
-                Here is one, worked through. Five runners come in at 14.1, 16.8, 15.0, 13.9 and 17.2
-                seconds, which adds to 77.0, so their average is 15.4 seconds. Close to 15.2, but not equal
-                to it.
-            </EditableParagraph>
-        </Block>
-    </StackLayout>,
-
-    <StackLayout key="layout-one-handful-hook" maxWidth="xl">
-        <Block id="one-handful-hook" padding="sm">
-            <EditableParagraph id="para-one-handful-hook" blockId="one-handful-hook">
-                That gap is not a mistake, and a different five runners would give a different answer,
-                maybe 14.7, maybe 16.1. So how far off can a single handful be? Let&apos;s find out.
+    <StackLayout key="layout-one-handful-invite" maxWidth="xl">
+        <Block id="one-handful-invite" padding="sm">
+            <EditableParagraph id="para-one-handful-invite" blockId="one-handful-invite">
+                Would the next five runners do any better? A guess of{" "}
+                <InlineScrubbleNumber
+                    varName="sprintPrediction"
+                    {...numberPropsFromDefinition(getVariableInfo('sprintPrediction'))}
+                    formatValue={(v) => `${v.toFixed(1)}`}
+                />
+                {" "}seconds is as good a start as any, so drag the teal marker to wherever you think their
+                average will land, then draw the handful.
             </EditableParagraph>
         </Block>
     </StackLayout>,
 
     <StackLayout key="layout-one-handful-visual" maxWidth="xl">
-        <Block id="one-handful-visual">
-            <VisualOptionCards
-                blockId="one-handful-visual"
-                cards={[
-                    {
-                        id: "predict-where-average-lands",
-                        title: "Every runner as a dot on a time line, with one dot for the sample average",
-                        looks: "Imagine every runner in the school as a small dot along a time line, fastest on the left and slowest on the right, with the school's true average hidden. Five dots light up as a random handful, and their average drops onto the line beneath them.",
-                        manipulate: "Mark on the line where they think the average of the next five runners will land, then draw the handful and see where it really falls",
-                        reveals: "A sample average lands near the true average but almost never exactly on it, and the next handful lands somewhere else again.",
-                        targetsMisconception: "One sample's average must equal the true average of everyone",
-                        paradigm: "prediction",
-                        recommended: true,
-                    },
-                    {
-                        id: "build-your-own-handful",
-                        title: "Runner cards students drop into a sample box that keeps a running average",
-                        looks: "Imagine the school's runners as small cards spread across the screen, each showing a name and a time, and an empty box marked 'my sample' below them. As cards are dropped in, an average appears at the edge of the box and shifts with every card added.",
-                        manipulate: "Drag runners of their own choosing into the sample box and watch the average move with each one",
-                        reveals: "Which runners you happen to pick decides your average, which is why two honest samples disagree.",
-                        paradigm: "constructivist",
-                    },
-                    {
-                        id: "two-students-two-handfuls",
-                        title: "The same school of runners shown twice, one handful picked in each copy",
-                        looks: "Imagine the school's runners drawn twice, one copy for Amara and one for Ben. Each copy has its own five highlighted runners and its own average marked below, with a short line joining the two averages so the gap between them is easy to see.",
-                        manipulate: "Swap runners in and out of either student's handful and compare where the two averages sit",
-                        reveals: "Two people sampling the same school honestly end up with two different averages, and neither of them is wrong.",
-                        paradigm: "comparison",
-                    },
-                ]}
-            />
+        <Block id="one-handful-visual" padding="sm" hasVisualization>
+            <SprintSamplePredictionFigure />
+        </Block>
+    </StackLayout>,
+
+    <StackLayout key="layout-one-handful-reflect" maxWidth="xl">
+        <Block id="one-handful-reflect" padding="sm">
+            <EditableParagraph id="para-one-handful-reflect" blockId="one-handful-reflect">
+                Each handful leaves its average behind as a faint mark, and those marks scatter either side
+                of{" "}
+                <InlineLinkedHighlight
+                    varName="sprintHighlight"
+                    highlightId="trueAverage"
+                    {...linkedHighlightPropsFromDefinition(getVariableInfo('sprintHighlight'))}
+                >
+                    the school&apos;s true average
+                </InlineLinkedHighlight>
+                {" "}rather than landing on it. Does any handful hit 15.2 exactly?
+            </EditableParagraph>
+        </Block>
+    </StackLayout>,
+
+    <StackLayout key="layout-one-handful-question-next" maxWidth="xl">
+        <Block id="one-handful-question-next" padding="md">
+            <EditableParagraph id="para-one-handful-question-next" blockId="one-handful-question-next">
+                A brand new handful of five runners is about to be drawn. Its average will be{" "}
+                <InlineFeedback
+                    varName="answer_one_handful_next"
+                    correctValue="close to 15.2 but usually not exactly 15.2"
+                    position="terminal"
+                    successMessage="— yes, a handful lands near the true average and only rarely right on it"
+                    failureMessage="— not quite."
+                    hint="Look at where the faint marks from the earlier handfuls sit"
+                    reviewBlockId="one-handful-reflect"
+                    reviewLabel="Review this idea"
+                    visualizationHint={{
+                        blockId: "one-handful-visual",
+                        hintKey: "one-handful-next-hint",
+                        label: "Discover it yourself",
+                        resetVars: { sprintDrawCount: 0, sprintLastMean: 0, sprintPrediction: 16 },
+                        steps: [
+                            {
+                                gesture: "drag-horizontal",
+                                label: "Drag the teal marker onto 15.2, the school's own average",
+                                position: { x: "57%", y: "17%" },
+                                dragPath: { type: "line", startOffset: { x: -30, y: 0 }, endOffset: { x: 30, y: 0 } },
+                                completionVar: "sprintPrediction",
+                                completionValue: 15.2,
+                                completionTolerance: 0.15,
+                            },
+                            {
+                                gesture: "click",
+                                label: "Now draw a few handfuls and see how many land right on the marker",
+                                position: { x: "44%", y: "90%" },
+                                completionVar: "sprintDrawCount",
+                                completionValue: 3,
+                                completionTolerance: 2,
+                            },
+                        ],
+                    }}
+                >
+                    <InlineClozeChoice
+                        varName="answer_one_handful_next"
+                        correctAnswer="close to 15.2 but usually not exactly 15.2"
+                        options={[
+                            "exactly 15.2",
+                            "close to 15.2 but usually not exactly 15.2",
+                            "nowhere near 15.2",
+                        ]}
+                        {...choicePropsFromDefinition(getVariableInfo('answer_one_handful_next'))}
+                    />
+                </InlineFeedback>.
+            </EditableParagraph>
+        </Block>
+    </StackLayout>,
+
+    <StackLayout key="layout-one-handful-question-mean" maxWidth="xl">
+        <Block id="one-handful-question-mean" padding="md">
+            <EditableParagraph id="para-one-handful-question-mean" blockId="one-handful-question-mean">
+                A different handful, this time of four sprinters, clocks 13.6, 15.4, 16.2 and 14.8 seconds,
+                so the average of that handful is{" "}
+                <InlineFeedback
+                    varName="answer_one_handful_mean"
+                    correctValue={["15", "15.0"]}
+                    position="terminal"
+                    successMessage="— exactly, 60.0 seconds shared between four runners"
+                    failureMessage="— almost."
+                    hint="Add the four times first, then split the total four ways"
+                >
+                    <InlineClozeInput
+                        varName="answer_one_handful_mean"
+                        correctAnswer={["15", "15.0"]}
+                        {...clozePropsFromDefinition(getVariableInfo('answer_one_handful_mean'))}
+                    />
+                </InlineFeedback>
+                {" "}seconds.
+            </EditableParagraph>
         </Block>
     </StackLayout>,
 ];

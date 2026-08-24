@@ -81,6 +81,73 @@ export interface VariableDefinition {
  *    { defaultValue: { x: 5, y: 10 }, type: 'object', schema: '{ x: number, y: number }' }
  */
 export const variableDefinitions: Record<string, VariableDefinition> = {
+    // ─────────────────────────────────────────
+    // Section: One Handful of Runners
+    // ─────────────────────────────────────────
+    sprintPrediction: {
+        defaultValue: 16,
+        type: 'number',
+        label: 'Predicted sample average',
+        description: 'Where the student thinks the next handful of five runners will average',
+        unit: 's',
+        min: 12.6,
+        max: 18.4,
+        step: 0.1,
+        color: '#62D0AD',
+    },
+    sprintDrawCount: {
+        defaultValue: 0,
+        type: 'number',
+        label: 'Handfuls drawn',
+        description: 'How many random handfuls of five runners have been drawn so far',
+        min: 0,
+        max: 999,
+        step: 1,
+        color: '#8E90F5',
+    },
+    sprintLastMean: {
+        defaultValue: 0,
+        type: 'number',
+        label: 'Latest handful average',
+        description: 'Average time of the most recently drawn handful of five runners',
+        unit: 's',
+        min: 12.6,
+        max: 18.4,
+        step: 0.1,
+        color: '#8E90F5',
+    },
+    sprintHighlight: {
+        defaultValue: '',
+        type: 'text',
+        label: 'Sprint figure highlight',
+        description: 'Which element of the sprint figure is highlighted on hover',
+        color: '#475569',
+        bgColor: 'rgba(71, 85, 105, 0.15)',
+    },
+    answer_one_handful_next: {
+        defaultValue: '',
+        type: 'select',
+        label: 'Next handful answer',
+        description: 'Student answer about how a fresh handful average compares with the true average',
+        placeholder: '???',
+        correctAnswer: 'close to 15.2 but usually not exactly 15.2',
+        options: [
+            'exactly 15.2',
+            'close to 15.2 but usually not exactly 15.2',
+            'nowhere near 15.2',
+        ],
+        color: '#8E90F5',
+    },
+    answer_one_handful_mean: {
+        defaultValue: '',
+        type: 'text',
+        label: 'Four sprinters average',
+        description: 'Student answer for the average of four given sprint times',
+        placeholder: '???',
+        correctAnswer: ['15', '15.0'],
+        color: '#62D0AD',
+    },
+
     // ========================================
     // ADD YOUR VARIABLES HERE
     // ========================================
