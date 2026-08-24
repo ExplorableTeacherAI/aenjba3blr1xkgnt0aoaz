@@ -38,7 +38,7 @@ export const cltOneHandfulBlocks: ReactElement[] = [
 
     <StackLayout key="layout-one-handful-invite" maxWidth="xl">
         <Block id="one-handful-invite" padding="sm">
-            <EditableParagraph id="para-one-handful-invite" blockId="one-handful-invite">Amara and Ben each grab five runners from that same school. Drag any of Amara's teal runners onto a different runner and her average shifts, while Ben's sits stubbornly somewhere else.</EditableParagraph>
+            <EditableParagraph id="para-one-handful-invite" blockId="one-handful-invite">Amara and Ben each grab five runners from that same school. Drag any of Amara's teal runners onto a different runner and her average shifts, while Ben's sits stubbornly somewhere else. /</EditableParagraph>
         </Block>
     </StackLayout>,
 
