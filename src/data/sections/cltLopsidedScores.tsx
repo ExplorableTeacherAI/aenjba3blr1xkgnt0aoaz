@@ -1,8 +1,21 @@
 import { type ReactElement } from "react";
 import { Block } from "@/components/templates";
-import { StackLayout } from "@/components/layouts";
-import { EditableH2, EditableParagraph } from "@/components/atoms";
-import { VisualOptionCards } from "@/components/organisms";
+import { StackLayout, SplitLayout } from "@/components/layouts";
+import {
+    EditableH2,
+    EditableParagraph,
+    InlineClozeInput,
+    InlineClozeChoice,
+    InlineLinkedHighlight,
+    InlineFeedback,
+} from "@/components/atoms";
+import {
+    getVariableInfo,
+    clozePropsFromDefinition,
+    choicePropsFromDefinition,
+    linkedHighlightPropsFromDefinition,
+} from "../variables";
+import { AuditionScoresFigure, AuditionAveragesFigure } from "./figures/AuditionLinkedFigures";
 
 export const cltLopsidedScoresBlocks: ReactElement[] = [
     <StackLayout key="layout-lopsided-heading" maxWidth="xl">
@@ -23,63 +36,127 @@ export const cltLopsidedScoresBlocks: ReactElement[] = [
         </Block>
     </StackLayout>,
 
-    <StackLayout key="layout-lopsided-sampling" maxWidth="xl">
-        <Block id="lopsided-sampling" padding="sm">
-            <EditableParagraph id="para-lopsided-sampling" blockId="lopsided-sampling">
-                Now take five dancers at random, average their scores, and repeat that a few hundred times.
-                The lopsided pile of scores stays lopsided, because that pile is the data itself.
+    <StackLayout key="layout-lopsided-invite" maxWidth="xl">
+        <Block id="lopsided-invite" padding="sm">
+            <EditableParagraph id="para-lopsided-invite" blockId="lopsided-invite">
+                Now average the scores of five dancers picked at random, over and over. Drag any bar on the
+                left to pile dancers onto different marks, and watch the pile of averages on the right
+                answer back.
             </EditableParagraph>
         </Block>
     </StackLayout>,
 
-    <StackLayout key="layout-lopsided-hook" maxWidth="xl">
-        <Block id="lopsided-hook" padding="sm">
-            <EditableParagraph id="para-lopsided-hook" blockId="lopsided-hook">
-                But the pile of averages is a different pile altogether. What shape does that one take?
+    <SplitLayout key="layout-lopsided-linked-views" ratio="1:1" gap="lg" align="start">
+        <Block id="lopsided-visual" padding="sm" hasVisualization>
+            <AuditionScoresFigure />
+        </Block>
+        <Block id="lopsided-averages-view" padding="sm" hasVisualization>
+            <AuditionAveragesFigure />
+        </Block>
+    </SplitLayout>,
+
+    <StackLayout key="layout-lopsided-reflect" maxWidth="xl">
+        <Block id="lopsided-reflect" padding="sm">
+            <EditableParagraph id="para-lopsided-reflect" blockId="lopsided-reflect">
+                However lopsided you make{" "}
+                <InlineLinkedHighlight
+                    varName="auditionHighlight"
+                    highlightId="scores"
+                    {...linkedHighlightPropsFromDefinition(getVariableInfo('auditionHighlight'))}
+                >
+                    the scores
+                </InlineLinkedHighlight>
+                ,{" "}
+                <InlineLinkedHighlight
+                    varName="auditionHighlight"
+                    highlightId="averages"
+                    {...linkedHighlightPropsFromDefinition(getVariableInfo('auditionHighlight'))}
+                >
+                    the pile of averages
+                </InlineLinkedHighlight>
+                {" "}keeps coming back to a bell, centred on{" "}
+                <InlineLinkedHighlight
+                    varName="auditionHighlight"
+                    highlightId="meanLine"
+                    {...linkedHighlightPropsFromDefinition(getVariableInfo('auditionHighlight'))}
+                >
+                    the average score
+                </InlineLinkedHighlight>
+                . The shape of the data and the shape of its averages are two different things.
             </EditableParagraph>
         </Block>
     </StackLayout>,
 
-    <StackLayout key="layout-lopsided-visual" maxWidth="xl">
-        <Block id="lopsided-visual">
-            <VisualOptionCards
-                blockId="lopsided-visual"
-                cards={[
-                    {
-                        id: "scores-beside-their-averages",
-                        title: "The lopsided audition scores on the left, the pile of their averages on the right",
-                        looks: "Imagine a chart of audition scores bunched hard at the low end with a long tail of high scorers, and beside it a second, empty chart where the average of each random group of dancers lands. As groups are drawn, the right-hand chart fills while the left-hand one never changes.",
-                        manipulate: "Reshape the score chart itself by dragging its bars, piling dancers up at one end, and watch what the averages on the right do about it",
-                        reveals: "However lopsided the original scores are, their averages still pile up into a bell.",
-                        targetsMisconception: "You only get a bell curve if the original data is already bell-shaped",
-                        paradigm: "comparison",
-                        recommended: true,
-                        secondView: {
-                            shows: "The pile of averages of random groups of dancers drawn from the current score chart",
-                            role: "complementary",
-                            syncedBy: "the score-shape and group-size variables, plus a shared hover highlight linking a drawn group to the average it produced",
-                        },
-                    },
-                    {
-                        id: "sketch-the-expected-shape",
-                        title: "The lopsided scores above an empty chart waiting for a hand-drawn guess",
-                        looks: "Imagine the lopsided audition scores drawn across the top of the screen and an empty chart directly below them. The lower chart stays blank until the sampling starts, and then the averages of random groups build up inside it.",
-                        manipulate: "Draw the shape they expect the averages to make, leaving their sketch on screen as a faint outline while the real averages build up over it",
-                        reveals: "Most students draw a lopsided shape, and the bell that appears instead is the surprise.",
-                        targetsMisconception: "You only get a bell curve if the original data is already bell-shaped",
-                        paradigm: "prediction",
-                    },
-                    {
-                        id: "build-a-strange-score-shape",
-                        title: "An empty score grid students fill dancer by dancer, with a pile of averages beneath",
-                        looks: "Imagine an empty grid where every click stacks another dancer onto a score out of ten, so any spiky, lopsided or two-humped set of scores can be built. Underneath it sits a second pile, made from the averages of random groups of five, rebuilding itself as the grid changes.",
-                        manipulate: "Stack dancers onto whichever scores they like to build a deliberately strange shape",
-                        reveals: "No matter how strange the shape students invent, the averages underneath keep forming a bell.",
-                        targetsMisconception: "You only get a bell curve if the original data is already bell-shaped",
-                        paradigm: "constructivist",
-                    },
-                ]}
-            />
+    <StackLayout key="layout-lopsided-question-shape" maxWidth="xl">
+        <Block id="lopsided-question-shape" padding="md">
+            <EditableParagraph id="para-lopsided-question-shape" blockId="lopsided-question-shape">
+                A gymnastics club scores its members in the same badly lopsided way. The averages of random
+                groups of five members will be{" "}
+                <InlineFeedback
+                    varName="answer_lopsided_shape"
+                    correctValue="still bell-shaped"
+                    position="terminal"
+                    successMessage="— yes, averaging smooths the lopsidedness away whatever the original scores look like"
+                    failureMessage="— have another look."
+                    hint="A group of five rarely picks five low scorers or five high ones, so most groups land in between"
+                    visualizationHint={{
+                        blockId: "lopsided-visual",
+                        hintKey: "lopsided-shape-hint",
+                        label: "Discover it yourself",
+                        resetVars: { auditionEdits: 0 },
+                        steps: [
+                            {
+                                gesture: "drag-vertical",
+                                label: "Drag the bars until nearly every dancer scores 8 or more",
+                                position: { x: "30%", y: "45%" },
+                                dragPath: { type: "line", startOffset: { x: 0, y: -22 }, endOffset: { x: 0, y: 22 } },
+                                completionVar: "auditionLowShare",
+                                completionValue: 10,
+                                completionTolerance: 10,
+                            },
+                            {
+                                gesture: "drag-vertical",
+                                label: "Now pile them back onto the low scores and watch the averages stay bell-shaped",
+                                position: { x: "30%", y: "45%" },
+                                dragPath: { type: "line", startOffset: { x: 0, y: -22 }, endOffset: { x: 0, y: 22 } },
+                                completionVar: "auditionLowShare",
+                                completionValue: 85,
+                                completionTolerance: 15,
+                            },
+                        ],
+                    }}
+                >
+                    <InlineClozeChoice
+                        varName="answer_lopsided_shape"
+                        correctAnswer="still bell-shaped"
+                        options={["still bell-shaped", "lopsided in the same way", "flat and shapeless"]}
+                        {...choicePropsFromDefinition(getVariableInfo('answer_lopsided_shape'))}
+                    />
+                </InlineFeedback>.
+            </EditableParagraph>
+        </Block>
+    </StackLayout>,
+
+    <StackLayout key="layout-lopsided-question-group-mean" maxWidth="xl">
+        <Block id="lopsided-question-group-mean" padding="md">
+            <EditableParagraph id="para-lopsided-question-group-mean" blockId="lopsided-question-group-mean">
+                One group of five dancers scores 4, 9, 6, 3 and 8. Their group average is{" "}
+                <InlineFeedback
+                    varName="answer_lopsided_group_mean"
+                    correctValue={["6", "6.0"]}
+                    position="terminal"
+                    successMessage="— right, 30 marks shared between five dancers, and notice it sits between the extremes"
+                    failureMessage="— not quite."
+                    hint="Add the five scores, then share the total between the five dancers"
+                >
+                    <InlineClozeInput
+                        varName="answer_lopsided_group_mean"
+                        correctAnswer={["6", "6.0"]}
+                        {...clozePropsFromDefinition(getVariableInfo('answer_lopsided_group_mean'))}
+                    />
+                </InlineFeedback>
+                {" "}out of 10.
+            </EditableParagraph>
         </Block>
     </StackLayout>,
 ];
