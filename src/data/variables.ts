@@ -84,43 +84,43 @@ export const variableDefinitions: Record<string, VariableDefinition> = {
     // ─────────────────────────────────────────
     // Section: One Handful of Runners
     // ─────────────────────────────────────────
-    sprintPrediction: {
-        defaultValue: 16,
-        type: 'number',
-        label: 'Predicted sample average',
-        description: 'Where the student thinks the next handful of five runners will average',
-        unit: 's',
-        min: 12.6,
-        max: 18.4,
-        step: 0.1,
-        color: '#E53935',
+    duelHandfulA: {
+        defaultValue: [12, 47, 88, 131, 176],
+        type: 'array',
+        label: "Amara's handful",
+        description: 'Which five runners are in the first handful',
     },
-    sprintDrawCount: {
+    duelHandfulB: {
+        defaultValue: [5, 63, 99, 148, 190],
+        type: 'array',
+        label: "Ben's handful",
+        description: 'Which five runners are in the second handful',
+    },
+    duelSwaps: {
         defaultValue: 0,
         type: 'number',
-        label: 'Handfuls drawn',
-        description: 'How many random handfuls of five runners have been drawn so far',
+        label: 'Runner swaps',
+        description: 'How many times a runner has been dragged in or out of a handful',
         min: 0,
         max: 999,
         step: 1,
-        color: '#8E90F5',
+        color: '#62D0AD',
     },
-    sprintLastMean: {
+    duelRedraws: {
         defaultValue: 0,
         type: 'number',
-        label: 'Latest handful average',
-        description: 'Average time of the most recently drawn handful of five runners',
-        unit: 's',
-        min: 12.6,
-        max: 18.4,
-        step: 0.1,
+        label: 'Fresh handfuls drawn',
+        description: 'How many times both handfuls have been drawn again from scratch',
+        min: 0,
+        max: 99,
+        step: 1,
         color: '#8E90F5',
     },
-    sprintHighlight: {
+    duelHighlight: {
         defaultValue: '',
         type: 'text',
-        label: 'Sprint figure highlight',
-        description: 'Which element of the sprint figure is highlighted on hover',
+        label: 'Two handfuls figure highlight',
+        description: 'Which element of the two-handfuls figure is highlighted on hover',
         color: '#475569',
         bgColor: 'rgba(71, 85, 105, 0.15)',
     },

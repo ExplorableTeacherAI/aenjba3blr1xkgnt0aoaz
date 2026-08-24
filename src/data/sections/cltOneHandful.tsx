@@ -4,7 +4,6 @@ import { StackLayout } from "@/components/layouts";
 import {
     EditableH2,
     EditableParagraph,
-    InlineScrubbleNumber,
     InlineClozeInput,
     InlineClozeChoice,
     InlineLinkedHighlight,
@@ -12,12 +11,11 @@ import {
 } from "@/components/atoms";
 import {
     getVariableInfo,
-    numberPropsFromDefinition,
     clozePropsFromDefinition,
     choicePropsFromDefinition,
     linkedHighlightPropsFromDefinition,
 } from "../variables";
-import { SprintSamplePredictionFigure } from "./figures/SprintSamplePredictionFigure";
+import { TwoHandfulsFigure } from "./figures/TwoHandfulsFigure";
 
 export const cltOneHandfulBlocks: ReactElement[] = [
     <StackLayout key="layout-one-handful-heading" maxWidth="xl">
@@ -40,29 +38,33 @@ export const cltOneHandfulBlocks: ReactElement[] = [
 
     <StackLayout key="layout-one-handful-invite" maxWidth="xl">
         <Block id="one-handful-invite" padding="sm">
-            <EditableParagraph id="para-one-handful-invite" blockId="one-handful-invite">Would the next five runners do any better? A guess of <InlineScrubbleNumber varName={"sprintPrediction"} defaultValue={20} min={10} max={30} step={105} color={"#E53935"} id={"scrubble-1787569355758-j60ni"} /> seconds is as good a start as any, so drag the teal marker to wherever you think their average will land, then draw the handful.</EditableParagraph>
+            <EditableParagraph id="para-one-handful-invite" blockId="one-handful-invite">
+                Amara and Ben each grab five runners from that same school. Drag any of Amara&apos;s teal
+                runners onto a different runner and her average shifts, while Ben&apos;s sits stubbornly
+                somewhere else.
+            </EditableParagraph>
         </Block>
     </StackLayout>,
 
     <StackLayout key="layout-one-handful-visual" maxWidth="xl">
         <Block id="one-handful-visual" padding="sm" hasVisualization>
-            <SprintSamplePredictionFigure />
+            <TwoHandfulsFigure />
         </Block>
     </StackLayout>,
 
     <StackLayout key="layout-one-handful-reflect" maxWidth="xl">
         <Block id="one-handful-reflect" padding="sm">
             <EditableParagraph id="para-one-handful-reflect" blockId="one-handful-reflect">
-                Each handful leaves its average behind as a faint mark, and those marks scatter either side
-                of{" "}
+                Both handfuls are honest, both were picked from the same runners, and still the two averages
+                land apart, either side of{" "}
                 <InlineLinkedHighlight
-                    varName="sprintHighlight"
+                    varName="duelHighlight"
                     highlightId="trueAverage"
-                    {...linkedHighlightPropsFromDefinition(getVariableInfo('sprintHighlight'))}
+                    {...linkedHighlightPropsFromDefinition(getVariableInfo('duelHighlight'))}
                 >
                     the school&apos;s true average
                 </InlineLinkedHighlight>
-                {" "}rather than landing on it. Does any handful hit 15.2 exactly?
+                . Can you make either one land on 15.2 exactly?
             </EditableParagraph>
         </Block>
     </StackLayout>,
@@ -77,31 +79,31 @@ export const cltOneHandfulBlocks: ReactElement[] = [
                     position="terminal"
                     successMessage="— yes, a handful lands near the true average and only rarely right on it"
                     failureMessage="— not quite."
-                    hint="Look at where the faint marks from the earlier handfuls sit"
+                    hint="Look at how far apart two honest handfuls from the same school already are"
                     reviewBlockId="one-handful-reflect"
                     reviewLabel="Review this idea"
                     visualizationHint={{
                         blockId: "one-handful-visual",
                         hintKey: "one-handful-next-hint",
                         label: "Discover it yourself",
-                        resetVars: { sprintDrawCount: 0, sprintLastMean: 0, sprintPrediction: 16 },
+                        resetVars: { duelSwaps: 0, duelRedraws: 0 },
                         steps: [
                             {
-                                gesture: "drag-horizontal",
-                                label: "Drag the teal marker onto 15.2, the school's own average",
-                                position: { x: "57%", y: "17%" },
-                                dragPath: { type: "line", startOffset: { x: -30, y: 0 }, endOffset: { x: 30, y: 0 } },
-                                completionVar: "sprintPrediction",
-                                completionValue: 15.2,
-                                completionTolerance: 0.15,
+                                gesture: "drag",
+                                label: "Drag one of Amara's runners onto another runner and watch her average move",
+                                position: { x: "45%", y: "24%" },
+                                dragPath: { type: "line", startOffset: { x: -25, y: -12 }, endOffset: { x: 25, y: 12 } },
+                                completionVar: "duelSwaps",
+                                completionValue: 2,
+                                completionTolerance: 1,
                             },
                             {
                                 gesture: "click",
-                                label: "Now draw a few handfuls and see how many land right on the marker",
-                                position: { x: "44%", y: "90%" },
-                                completionVar: "sprintDrawCount",
-                                completionValue: 3,
-                                completionTolerance: 2,
+                                label: "Now give them both new handfuls and compare the two averages again",
+                                position: { x: "50%", y: "92%" },
+                                completionVar: "duelRedraws",
+                                completionValue: 2,
+                                completionTolerance: 1,
                             },
                         ],
                     }}
