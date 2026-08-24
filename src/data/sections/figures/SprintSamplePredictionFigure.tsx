@@ -3,6 +3,21 @@ import { Figure } from "@/components/molecules";
 import { InteractionHintSequence } from "@/components/atoms";
 import { useVar, useSetVar } from "@/stores";
 import { clamp, useSpring } from "@/lib/motion";
+import {
+    POPULATION as RUNNERS,
+    TRUE_MEAN,
+    drawHandfulIndices,
+    handfulMean,
+} from "./sprintPopulation";
+import {
+    ACCENT,
+    INK,
+    INK_STRONG,
+    PARTNER,
+    POPULATION_COLOR,
+    clampLabelX,
+    formatTime,
+} from "./figureStyle";
 
 /**
  * Sprint sample prediction figure
@@ -32,15 +47,7 @@ const TRUE_LABEL_Y = 281;
 const HANDLE_Y = 50;
 const PREDICTION_LABEL_Y = 33;
 
-const TRUE_MEAN = 15.2;
-const RUNNER_COUNT = 200;
 const HANDFUL_SIZE = 5;
-
-const INK = "#64748B";
-const INK_STRONG = "#475569";
-const POPULATION_COLOR = "#94A3B8";
-const ACCENT = "#62D0AD";
-const PARTNER = "#8E90F5";
 
 const xOfTime = (time: number) =>
     AXIS_LEFT + ((time - TIME_MIN) / (TIME_MAX - TIME_MIN)) * (AXIS_RIGHT - AXIS_LEFT);
@@ -48,41 +55,12 @@ const xOfTime = (time: number) =>
 const timeOfX = (x: number) =>
     TIME_MIN + ((x - AXIS_LEFT) / (AXIS_RIGHT - AXIS_LEFT)) * (TIME_MAX - TIME_MIN);
 
-const formatTime = (value: number) => `${value.toFixed(1)} s`;
+const clampLabel = (x: number, text: string) => clampLabelX(x, text, VIEWBOX_WIDTH, PAD);
 
-/** Keep a centred label fully inside the viewBox (text ~ chars x size x 0.6). */
-const clampLabel = (x: number, text: string, fontSize = 12) => {
-    const half = (text.length * fontSize * 0.6) / 2;
-    return clamp(x, PAD + half, VIEWBOX_WIDTH - PAD - half);
-};
-
-/** Deterministic population so every student sees the same school. */
-const mulberry32 = (seed: number) => () => {
-    seed |= 0;
-    seed = (seed + 0x6d2b79f5) | 0;
-    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-};
-
-const buildPopulation = () => {
-    const random = mulberry32(20240824);
-    const times: number[] = [];
-    const jitter: number[] = [];
-    for (let i = 0; i < RUNNER_COUNT; i += 1) {
-        const bell = (random() + random() + random() + random()) / 4 - 0.5;
-        times.push(clamp(TRUE_MEAN + bell * 6.6, 12.9, 18.2));
-        jitter.push(random());
-    }
-    const mean = times.reduce((sum, t) => sum + t, 0) / RUNNER_COUNT;
-    const shift = TRUE_MEAN - mean;
-    return times.map((time, index) => ({
-        time: time + shift,
-        y: BAND_TOP + jitter[index] * BAND_HEIGHT,
-    }));
-};
-
-const POPULATION = buildPopulation();
+const POPULATION = RUNNERS.map((runner) => ({
+    time: runner.time,
+    y: BAND_TOP + runner.jitter * BAND_HEIGHT,
+}));
 const TICKS = [13, 14, 15, 16, 17, 18];
 
 export function SprintSamplePredictionFigure() {
@@ -131,13 +109,8 @@ export function SprintSamplePredictionFigure() {
     );
 
     const drawHandful = useCallback(() => {
-        const picked: number[] = [];
-        while (picked.length < HANDFUL_SIZE) {
-            const index = Math.floor(Math.random() * RUNNER_COUNT);
-            if (!picked.includes(index)) picked.push(index);
-        }
-        const mean =
-            Math.round((picked.reduce((sum, i) => sum + POPULATION[i].time, 0) / HANDFUL_SIZE) * 10) / 10;
+        const picked = drawHandfulIndices(HANDFUL_SIZE);
+        const mean = Math.round(handfulMean(picked) * 10) / 10;
         setSampled(picked);
         setHistory((previous) => [...previous, mean]);
         setVar("sprintLastMean", mean);
