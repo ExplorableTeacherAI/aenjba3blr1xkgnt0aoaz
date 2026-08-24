@@ -40,7 +40,7 @@ export const cltOneHandfulBlocks: ReactElement[] = [
 
     <StackLayout key="layout-one-handful-invite" maxWidth="xl">
         <Block id="one-handful-invite" padding="sm">
-            <EditableParagraph id="para-one-handful-invite" blockId="one-handful-invite">Would the next five runners do any better? A guess of <InlineScrubbleNumber varName={"sprintPrediction"} defaultValue={16} min={12.6} max={18.4} step={0.1} color={"#62D0AD"} id={"scrubble-1787569355758-j60ni"} /> seconds is as good a start as any, so drag the teal marker to wherever you think their average will land, then draw the handful. /</EditableParagraph>
+            <EditableParagraph id="para-one-handful-invite" blockId="one-handful-invite">Would the next five runners do any better? A guess of <InlineScrubbleNumber varName={"sprintPrediction"} defaultValue={20} min={10} max={30} step={105} color={"#E53935"} id={"scrubble-1787569355758-j60ni"} /> seconds is as good a start as any, so drag the teal marker to wherever you think their average will land, then draw the handful.</EditableParagraph>
         </Block>
     </StackLayout>,
 

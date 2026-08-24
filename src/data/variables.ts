@@ -93,7 +93,7 @@ export const variableDefinitions: Record<string, VariableDefinition> = {
         min: 12.6,
         max: 18.4,
         step: 0.1,
-        color: '#62D0AD',
+        color: '#E53935',
     },
     sprintDrawCount: {
         defaultValue: 0,
