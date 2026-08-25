@@ -10,6 +10,7 @@
     "one-handful-invite",
     "one-handful-visual",
     "one-handful-reflect",
+    "block-1787658107368",
     "one-handful-question-next",
     "one-handful-question-mean",
     "stacking-heading",
@@ -108,6 +109,18 @@
         [
           "one-handful-visual",
           "one-handful-reflect"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
+      }
+    },
+    {
+      "id": "layout-block-1787658107368",
+      "type": "stack",
+      "columns": [
+        [
+          "block-1787658107368"
         ]
       ],
       "props": {

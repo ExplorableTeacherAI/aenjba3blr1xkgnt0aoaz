@@ -48,6 +48,12 @@ export const cltOneHandfulBlocks: ReactElement[] = [
         </Block>
     </StackLayout>,
 
+    <StackLayout key="layout-block-1787658107368" maxWidth="xl">
+        <Block id="block-1787658107368" padding="sm">
+            <EditableParagraph id="para-block-1787658107368" blockId="block-1787658107368">jfjjgg  </EditableParagraph>
+        </Block>
+    </StackLayout>,
+
     <StackLayout key="layout-one-handful-reflect" maxWidth="xl">
         <Block id="one-handful-reflect" padding="sm">
             <EditableParagraph id="para-one-handful-reflect" blockId="one-handful-reflect">
