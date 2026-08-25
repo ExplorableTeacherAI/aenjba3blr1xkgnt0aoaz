@@ -31,12 +31,7 @@ export const cltIntroductionBlocks: ReactElement[] = [
 
     <StackLayout key="layout-intro-promise" maxWidth="xl">
         <Block id="intro-promise" padding="sm">
-            <EditableParagraph id="para-intro-promise" blockId="intro-promise">
-                Those answers are never all the same, but they are not scattered wildly either. They pile
-                up into a shape, and the bigger your handful of runners, the more that shape settles into a
-                smooth bell. By the end of this you will be able to describe how that bell appears, and all
-                you need to begin is knowing how to work out an average.
-            </EditableParagraph>
+            <EditableParagraph id="para-intro-promise" blockId="intro-promise">Those answers are never all the same, but they are not scattered wildly either. They pile up into a shape, and the bigger your handful of runners, the more that shape settles into a smooth bell. By the end of this you will be able to describe how that bell appears, and all you need to begin is knowing how to work out an average.e</EditableParagraph>
         </Block>
     </StackLayout>,
 ];
