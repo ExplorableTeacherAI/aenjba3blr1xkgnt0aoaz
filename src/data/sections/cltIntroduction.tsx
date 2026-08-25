@@ -13,10 +13,10 @@ export const cltIntroductionBlocks: ReactElement[] = [
     </StackLayout>,
 
     <StackLayout key="layout-block-1787649252986" maxWidth="xl">
-        <Block id="block-1787649252986" padding="sm">
-            <EditableParagraph id="para-block-1787649252986" blockId="block-1787649252986">/</EditableParagraph>
-        </Block>
-    </StackLayout>,
+    <Block id="block-1787649252986" padding="sm">
+        <EditableParagraph id="para-block-1787649252986" blockId="block-1787649252986"></EditableParagraph>
+    </Block>
+</StackLayout>,
 
     <StackLayout key="layout-intro-sports-day" maxWidth="xl">
         <Block id="intro-sports-day" padding="sm">
