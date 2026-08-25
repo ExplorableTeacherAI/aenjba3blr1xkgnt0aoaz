@@ -14,7 +14,7 @@ export const cltIntroductionBlocks: ReactElement[] = [
 
     <StackLayout key="layout-block-1787649252986" maxWidth="xl">
     <Block id="block-1787649252986" padding="sm">
-        <EditableParagraph id="para-block-1787649252986" blockId="block-1787649252986"></EditableParagraph>
+        <EditableParagraph id="para-block-1787649252986" blockId="block-1787649252986">/</EditableParagraph>
     </Block>
 </StackLayout>,
 
