@@ -56,18 +56,7 @@
       "type": "stack",
       "columns": [
         [
-          "block-1787649252986"
-        ]
-      ],
-      "props": {
-        "maxWidth": "xl"
-      }
-    },
-    {
-      "id": "layout-intro-sports-day",
-      "type": "stack",
-      "columns": [
-        [
+          "block-1787649252986",
           "intro-sports-day"
         ]
       ],
