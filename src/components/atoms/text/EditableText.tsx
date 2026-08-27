@@ -17,7 +17,7 @@ interface EditableTextProps {
 }
 
 // Context to check if we are inside an editable text component.
-// `skipBlurRef` allows child inline components (InlineFormula, InlineTooltip, etc.)
+// `skipBlurRef` allows child inline components (InlineFormula, InlineHyperlink, etc.)
 // to suppress the parent EditableText's handleBlur when opening their editor modal.
 interface EditableTextContextValue {
     isParentEditable: boolean;
@@ -59,17 +59,33 @@ export const EditableText: React.FC<EditableTextProps> = ({
     const refreshEmptyState = useCallback(() => {
         const element = containerRef.current;
         if (!element) return;
-        const hasInlineComponent = Boolean(
-            element.querySelector('[data-inline-component]')
+        // Hidden staged content (e.g. RevealOnInteraction before the student
+        // interacts) counts as content: the block is not empty, its text just
+        // has not appeared yet — the "empty block" placeholder would mislead.
+        const hasHiddenContent = Boolean(
+            element.querySelector('[data-inline-component], [data-reveal-pending]')
         );
         const text = (element.innerText || element.textContent || '')
             .replace(/(?:\s|\u00a0|\u200B|\u200C|\u200D|\uFEFF)+/g, '');
-        setIsVisuallyEmpty(!hasInlineComponent && text.length === 0);
+        setIsVisuallyEmpty(!hasHiddenContent && text.length === 0);
     }, []);
 
     useEffect(() => {
         refreshEmptyState();
     }, [children, refreshEmptyState]);
+
+    // Content can change without this component re-rendering — a
+    // RevealOnInteraction firing, state-bound text updating, an inline
+    // component mounting late. Watch the DOM itself so the empty flag (and
+    // with it the placeholder overlay) can never go stale and sit behind
+    // text that appeared after mount.
+    useEffect(() => {
+        const element = containerRef.current;
+        if (!element || !isEditor) return;
+        const observer = new MutationObserver(refreshEmptyState);
+        observer.observe(element, { subtree: true, childList: true, characterData: true });
+        return () => observer.disconnect();
+    }, [isEditor, refreshEmptyState]);
 
     // Inline slash commands (inert when enableSlashCommands is false)
     const {
@@ -135,7 +151,7 @@ export const EditableText: React.FC<EditableTextProps> = ({
             originalTextRef.current = containerRef.current.innerText;
             originalHtmlRef.current = containerRef.current.innerHTML;
             // Track how many inline components exist BEFORE editing so we can detect
-            // truly new insertions on blur (not pre-existing ones like InlineTrigger).
+            // truly new insertions on blur (not pre-existing ones like InlineHyperlink).
             originalInlineCountRef.current = containerRef.current.querySelectorAll('[data-inline-component]').length;
             // Capture text excluding inline component output for accurate change detection
             originalTextWithoutInlineRef.current = extractTextWithoutInline(containerRef.current);
@@ -181,7 +197,7 @@ export const EditableText: React.FC<EditableTextProps> = ({
         // Check if NEW inline component placeholders were inserted during this edit session.
         // Compare the current count against the count recorded when editing started.
         // This prevents unnecessary round-trips when pre-existing inline components
-        // (e.g. InlineTrigger, InlineScrubbleNumber) are already in the paragraph.
+        // (e.g. InlineHyperlink, InlineFormula) are already in the paragraph.
         const currentInlineCount = containerRef.current.querySelectorAll('[data-inline-component]').length;
         const hasNewInlineComponents = enableSlashCommands && currentInlineCount > originalInlineCountRef.current;
         const hasAnyInlineComponents = currentInlineCount > 0;
@@ -213,9 +229,9 @@ export const EditableText: React.FC<EditableTextProps> = ({
 
         // Only create a text edit when no NEW inline components were inserted.
         // New inline components (from slash commands) have their own edit pipeline
-        // (trigger/hyperlink/tooltip edits). Including their rendered text in the
+        // (hyperlink/formula edits). Including their rendered text in the
         // text edit causes duplicates: the backend writes the rendered text as plain
-        // text AND the component edit inserts the real <InlineTrigger> / etc.
+        // text AND the component edit inserts the real <InlineHyperlink> / etc.
         if (textContentChanged && !hasNewInlineComponents) {
             console.log(`[EditableText blur] Creating text edit for blockId=${blockId} hasInline=${hasAnyInlineComponents}`);
             if (hasAnyInlineComponents) {
