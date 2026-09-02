@@ -14,10 +14,9 @@ import { FormulaBlock } from "@/components/molecules";
 import {
     getVariableInfo,
     choicePropsFromDefinition,
-    linkedHighlightPropsFromDefinition,
     spotColorPropsFromDefinition,
 } from "../variables";
-import { ACCENT, ACCENT_BG, INK_BG, INK_STRONG, PARTNER, PARTNER_BG } from "./figures/figureStyle";
+import { INK_BG, INK_STRONG } from "./figures/figureStyle";
 import { TwoHandfulsFigure } from "./figures/TwoHandfulsFigure";
 
 const HANDFUL_COLORS = {
@@ -44,7 +43,7 @@ export const cltOneHandfulBlocks: ReactElement[] = [
     <StackLayout key="layout-one-handful-heading" maxWidth="xl">
         <Block id="one-handful-heading" padding="md">
             <EditableH2 id="h2-one-handful-heading" blockId="one-handful-heading">
-                One Handful of Runners
+                Random Samples and the Sample Mean
             </EditableH2>
         </Block>
     </StackLayout>,
@@ -59,15 +58,35 @@ export const cltOneHandfulBlocks: ReactElement[] = [
                 >
                     true average
                 </InlineSpotColor>
-                {" "}across the whole school is 15.2 seconds, though nobody knows that yet. Five runners
-                give a{" "}
+                {" "}across the whole school, the{" "}
+                <InlineTooltip
+                    id="tooltip-one-handful-population-mean"
+                    tooltip="Population mean: the average you would get if you measured every single member of the group."
+                >
+                    population mean
+                </InlineTooltip>
+                , is 15.2 seconds, though nobody knows that yet. A{" "}
+                <InlineTooltip
+                    id="tooltip-one-handful-sample"
+                    tooltip="Sample: a smaller group drawn at random from the population, standing in for the whole."
+                >
+                    sample
+                </InlineTooltip>
+                {" "}of five runners gives a{" "}
                 <InlineSpotColor
                     varName="totalColor"
                     {...spotColorPropsFromDefinition(getVariableInfo('totalColor'))}
                 >
                     total
                 </InlineSpotColor>
-                {" "}of 77.0 seconds, and sharing that between them lands close, but not equal.
+                {" "}of 77.0 seconds, and sharing that between them gives a{" "}
+                <InlineTooltip
+                    id="tooltip-one-handful-sample-mean"
+                    tooltip="Sample mean: the average of one sample, an estimate of the population mean."
+                >
+                    sample mean
+                </InlineTooltip>
+                {" "}that lands close, but not equal.
             </EditableParagraph>
         </Block>
     </StackLayout>,

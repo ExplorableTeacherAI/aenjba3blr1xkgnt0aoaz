@@ -17,7 +17,6 @@ import { useVar } from "@/stores";
 import {
     getVariableInfo,
     choicePropsFromDefinition,
-    linkedHighlightPropsFromDefinition,
     numberPropsFromDefinition,
     scrubVarsFromDefinitions,
     spotColorPropsFromDefinition,
@@ -38,7 +37,7 @@ function PileWidthFormula() {
     const width = (1.0 / Math.sqrt(Math.max(size, 1))).toFixed(2);
     return (
         <FormulaBlock
-            latex={`\\clr{spread}{\\text{width of the pile}} \\approx \\frac{\\clr{scatter}{1.0\\ \\text{s}}}{\\sqrt{\\scrub{sketchSampleSize}}} = \\clr{spread}{${width}}\\ \\text{s}`}
+            latex={`\\clr{spread}{\\text{standard error}} \\approx \\frac{\\clr{scatter}{1.0\\ \\text{s}}}{\\sqrt{\\scrub{sketchSampleSize}}} = \\clr{spread}{${width}}\\ \\text{s}`}
             colorMap={BIGGER_COLORS}
             variables={scrubVarsFromDefinitions(['sketchSampleSize'])}
         />
@@ -49,7 +48,7 @@ export const cltBiggerHandfulsBlocks: ReactElement[] = [
     <StackLayout key="layout-bigger-handfuls-heading" maxWidth="xl">
         <Block id="bigger-handfuls-heading" padding="md">
             <EditableH2 id="h2-bigger-handfuls-heading" blockId="bigger-handfuls-heading">
-                Bigger Handfuls
+                Sample Size and the Standard Error
             </EditableH2>
         </Block>
     </StackLayout>,
@@ -125,7 +124,14 @@ export const cltBiggerHandfulsBlocks: ReactElement[] = [
         <Block id="bigger-handfuls-reflect" padding="sm">
             <EditableParagraph id="para-bigger-handfuls-reflect" blockId="bigger-handfuls-reflect">
                 The runners scatter by about a second whatever you do, but that scatter gets shared out, so
-                the pile narrows by the square root of the handful size.{" "}
+                the width of the pile, its{" "}
+                <InlineTooltip
+                    id="tooltip-bigger-handfuls-standard-error"
+                    tooltip="Standard error: how far a sample mean typically falls from the population mean. It shrinks with the square root of the sample size."
+                >
+                    standard error
+                </InlineTooltip>
+                , narrows by the square root of the sample size.{" "}
                 <InlineLinkedHighlight
                     varName="sketchHighlight"
                     highlightId="sketch"

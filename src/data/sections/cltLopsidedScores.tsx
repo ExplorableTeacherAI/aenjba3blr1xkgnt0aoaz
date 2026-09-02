@@ -4,7 +4,6 @@ import { StackLayout, SplitLayout } from "@/components/layouts";
 import {
     EditableH2,
     EditableParagraph,
-    InlineFormula,
     InlineClozeInput,
     InlineClozeChoice,
     InlineLinkedHighlight,
@@ -17,7 +16,6 @@ import {
     getVariableInfo,
     clozePropsFromDefinition,
     choicePropsFromDefinition,
-    linkedHighlightPropsFromDefinition,
     scrubVarsFromDefinitions,
     spotColorPropsFromDefinition,
 } from "../variables";
@@ -34,7 +32,7 @@ export const cltLopsidedScoresBlocks: ReactElement[] = [
     <StackLayout key="layout-lopsided-heading" maxWidth="xl">
         <Block id="lopsided-heading" padding="md">
             <EditableH2 id="h2-lopsided-heading" blockId="lopsided-heading">
-                Lopsided Scores, Bell-Shaped Averages
+                Skewed Populations, Normally Distributed Sample Means
             </EditableH2>
         </Block>
     </StackLayout>,
@@ -119,7 +117,14 @@ export const cltLopsidedScoresBlocks: ReactElement[] = [
                 >
                     the pile of averages
                 </InlineLinkedHighlight>
-                {" "}keeps coming back to a bell, centred on{" "}
+                {" "}keeps coming back to a{" "}
+                <InlineTooltip
+                    id="tooltip-lopsided-normal"
+                    tooltip="Normal distribution: the symmetric bell-shaped curve that sample means settle into."
+                >
+                    normal
+                </InlineTooltip>
+                {" "}bell, centred on{" "}
                 <InlineLinkedHighlight
                     varName="auditionHighlight"
                     highlightId="meanLine"

@@ -14,7 +14,7 @@ export const cltWrappingUpBlocks: ReactElement[] = [
     <StackLayout key="layout-wrapping-heading" maxWidth="xl">
         <Block id="wrapping-heading" padding="md">
             <EditableH2 id="h2-wrapping-heading" blockId="wrapping-heading">
-                Wrapping Up
+                Summary: The Central Limit Theorem
             </EditableH2>
         </Block>
     </StackLayout>,
@@ -38,12 +38,19 @@ export const cltWrappingUpBlocks: ReactElement[] = [
                 >
                     true average
                 </InlineSpotColor>
-                {" "}and narrowing as{" "}
+                {" "}and narrowing as the{" "}
+                <InlineTooltip
+                    id="tooltip-wrapping-standard-error"
+                    tooltip="Standard error (SE): the typical distance between a sample mean and the population mean, sigma over the square root of the sample size n."
+                >
+                    standard error
+                </InlineTooltip>
+                {" "}
                 <InlineFormula
-                    latex="\clr{spread}{\text{width}} \approx \frac{\clr{scatter}{\text{scatter}}}{\sqrt{\clr{count}{n}}}"
+                    latex="\clr{spread}{\text{SE}} \approx \frac{\clr{scatter}{\sigma}}{\sqrt{\clr{count}{n}}}"
                     colorMap={{ spread: '#8E90F5', scatter: '#94A3B8', count: '#62D0AD' }}
                 />
-                {" "}with every extra runner in the handful.
+                {" "}shrinks with every extra runner in the sample.
             </EditableParagraph>
         </Block>
     </StackLayout>,

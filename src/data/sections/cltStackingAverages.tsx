@@ -16,12 +16,11 @@ import { FormulaBlock } from "@/components/molecules";
 import {
     getVariableInfo,
     choicePropsFromDefinition,
-    linkedHighlightPropsFromDefinition,
     numberPropsFromDefinition,
     scrubVarsFromDefinitions,
     spotColorPropsFromDefinition,
 } from "../variables";
-import { ACCENT, ACCENT_BG, INK_BG, INK_STRONG, PARTNER, PARTNER_BG } from "./figures/figureStyle";
+import { INK_BG, INK_STRONG, PARTNER, PARTNER_BG } from "./figures/figureStyle";
 import { AveragePourFigure } from "./figures/AveragePourFigure";
 
 const STACK_COLORS = {
@@ -36,7 +35,7 @@ export const cltStackingAveragesBlocks: ReactElement[] = [
     <StackLayout key="layout-stacking-heading" maxWidth="xl">
         <Block id="stacking-heading" padding="md">
             <EditableH2 id="h2-stacking-heading" blockId="stacking-heading">
-                Stacking Up the Averages
+                Building the Sampling Distribution of the Mean
             </EditableH2>
         </Block>
     </StackLayout>,
@@ -123,7 +122,14 @@ export const cltStackingAveragesBlocks: ReactElement[] = [
                 >
                     the middle columns
                 </InlineLinkedHighlight>
-                {" "}climb fastest and the edges stay short.
+                {" "}climb fastest and the edges stay short. The pile you are building has a name: the{" "}
+                <InlineTooltip
+                    id="tooltip-stacking-sampling-distribution"
+                    tooltip="Sampling distribution of the mean: the pattern you get by plotting the sample mean from many random samples of the same size."
+                >
+                    sampling distribution of the mean
+                </InlineTooltip>
+                .
             </EditableParagraph>
         </Block>
     </StackLayout>,
