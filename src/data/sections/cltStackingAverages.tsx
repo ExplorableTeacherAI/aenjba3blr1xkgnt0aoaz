@@ -4,6 +4,7 @@ import { StackLayout } from "@/components/layouts";
 import {
     EditableH2,
     EditableParagraph,
+    InlineFormula,
     InlineClozeInput,
     InlineClozeChoice,
     InlineLinkedHighlight,
@@ -14,7 +15,7 @@ import {
     clozePropsFromDefinition,
     choicePropsFromDefinition,
 } from "../variables";
-import { INK_BG, INK_STRONG, PARTNER, PARTNER_BG } from "./figures/figureStyle";
+import { ACCENT, ACCENT_BG, INK_BG, INK_STRONG, PARTNER, PARTNER_BG } from "./figures/figureStyle";
 import { AveragePourFigure } from "./figures/AveragePourFigure";
 
 export const cltStackingAveragesBlocks: ReactElement[] = [
@@ -39,8 +40,17 @@ export const cltStackingAveragesBlocks: ReactElement[] = [
         <Block id="stacking-invite" padding="sm">
             <EditableParagraph id="para-stacking-invite" blockId="stacking-invite">
                 A column ten blocks tall means ten handfuls averaged somewhere inside that quarter-second.
-                Drag the teal sampler to the right to tip it over, gently for a trickle of handfuls or
-                right over for a stream, and see which columns climb.
+                Drag{" "}
+                <InlineLinkedHighlight
+                    varName="stackHighlight"
+                    highlightId="sampler"
+                    color={ACCENT}
+                    bgColor={ACCENT_BG}
+                >
+                    the teal sampler
+                </InlineLinkedHighlight>
+                {" "}to the right to tip it over, gently for a trickle of handfuls or right over for a
+                stream, and see which columns climb.
             </EditableParagraph>
         </Block>
     </StackLayout>,
@@ -80,8 +90,11 @@ export const cltStackingAveragesBlocks: ReactElement[] = [
     <StackLayout key="layout-stacking-question-columns" maxWidth="xl">
         <Block id="stacking-question-columns" padding="md">
             <EditableParagraph id="para-stacking-question-columns" blockId="stacking-question-columns">
-                Suppose one column stands 12 blocks tall and the column beside it stands 9. The number of
-                handfuls that landed across those two quarter-seconds together is{" "}
+                Suppose one column stands{" "}
+                <InlineFormula latex="\clr{column}{12}" colorMap={{ column: PARTNER }} color={PARTNER} />
+                {" "}blocks tall and the column beside it stands{" "}
+                <InlineFormula latex="\clr{column}{9}" colorMap={{ column: PARTNER }} color={PARTNER} />
+                . The number of handfuls that landed across those two quarter-seconds together is{" "}
                 <InlineFeedback
                     varName="answer_stacking_two_columns"
                     correctValue="21"

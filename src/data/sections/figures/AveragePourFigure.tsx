@@ -167,6 +167,7 @@ export function AveragePourFigure() {
     const dim = (id: string) => (highlight && highlight !== id ? 0.35 : 1);
     const trueActive = highlight === "trueAverage";
     const middleActive = highlight === "middle";
+    const samplerActive = highlight === "sampler";
     const trueX = xOfTime(TRUE_MEAN);
     const trueLabel = `school average ${formatTime(TRUE_MEAN)}`;
 
@@ -342,15 +343,28 @@ export function AveragePourFigure() {
 
                 {/* the sampler: the one thing the student controls */}
                 <g opacity={dim("sampler")} style={{ transition: "opacity 150ms ease-out" }}>
-                    <g transform={`translate(${SAMPLER_X} ${SAMPLER_Y}) rotate(${shownTilt})`}>
+                    <g transform={`translate(${SAMPLER_X} ${SAMPLER_Y}) rotate(${shownTilt})`}
+                        {...hoverProps("sampler")}
+                    >
                         <g transform={`scale(${handleScale})`}>
+                            {samplerActive && (
+                                <path
+                                    d="M -38 -20 L 38 -20 L 26 18 L -26 18 Z"
+                                    fill="none"
+                                    stroke={ACCENT}
+                                    strokeWidth="10"
+                                    opacity={0.28}
+                                    strokeLinejoin="round"
+                                />
+                            )}
                             <path
                                 d="M -38 -20 L 38 -20 L 26 18 L -26 18 Z"
                                 fill="#FFFFFF"
                                 stroke={ACCENT}
-                                strokeWidth="3.5"
+                                strokeWidth={samplerActive ? 5 : 3.5}
                                 strokeLinejoin="round"
                                 filter="url(#pour-handle-shadow)"
+                                style={{ transition: "stroke-width 150ms ease-out" }}
                             />
                             {[-18, -6, 6, 18].map((offset) => (
                                 <circle key={offset} cx={offset} cy={2} r={4} fill={PARTNER} opacity={0.85} />

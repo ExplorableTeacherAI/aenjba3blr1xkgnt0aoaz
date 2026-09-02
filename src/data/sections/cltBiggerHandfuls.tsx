@@ -4,15 +4,19 @@ import { StackLayout } from "@/components/layouts";
 import {
     EditableH2,
     EditableParagraph,
+    InlineScrubbleNumber,
     InlineClozeInput,
     InlineClozeChoice,
     InlineLinkedHighlight,
     InlineFeedback,
 } from "@/components/atoms";
+import { FormulaBlock } from "@/components/molecules";
 import {
     getVariableInfo,
+    numberPropsFromDefinition,
     clozePropsFromDefinition,
     choicePropsFromDefinition,
+    scrubVarsFromDefinitions,
 } from "../variables";
 import { ACCENT, ACCENT_BG, INK_BG, INK_STRONG, PARTNER, PARTNER_BG } from "./figures/figureStyle";
 import { SketchThePileFigure } from "./figures/SketchThePileFigure";
@@ -29,9 +33,23 @@ export const cltBiggerHandfulsBlocks: ReactElement[] = [
     <StackLayout key="layout-bigger-handfuls-setup" maxWidth="xl">
         <Block id="bigger-handfuls-setup" padding="sm">
             <EditableParagraph id="para-bigger-handfuls-setup" blockId="bigger-handfuls-setup">
-                Now change one thing only: how many runners go into each handful. Same school, same two
-                hundred repeats, but handfuls of two instead of five, or handfuls of thirty.
+                Now change one thing only: how many runners go into each handful. With{" "}
+                <InlineScrubbleNumber
+                    varName="sketchSampleSize"
+                    {...numberPropsFromDefinition(getVariableInfo('sketchSampleSize'))}
+                />
+                {" "}runners in every handful, the same two hundred repeats build a different pile.
             </EditableParagraph>
+        </Block>
+    </StackLayout>,
+
+    <StackLayout key="layout-bigger-handfuls-formula" maxWidth="xl">
+        <Block id="bigger-handfuls-formula" padding="lg">
+            <FormulaBlock
+                latex={`\\textcolor{${PARTNER}}{\\text{handful average}} = \\frac{\\text{total of the times}}{\\scrub{sketchSampleSize}}`}
+                variables={scrubVarsFromDefinitions(['sketchSampleSize'])}
+                color={INK_STRONG}
+            />
         </Block>
     </StackLayout>,
 

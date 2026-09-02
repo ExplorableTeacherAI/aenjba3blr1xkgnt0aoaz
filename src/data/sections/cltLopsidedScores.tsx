@@ -4,6 +4,7 @@ import { StackLayout, SplitLayout } from "@/components/layouts";
 import {
     EditableH2,
     EditableParagraph,
+    InlineFormula,
     InlineClozeInput,
     InlineClozeChoice,
     InlineLinkedHighlight,
@@ -39,9 +40,14 @@ export const cltLopsidedScoresBlocks: ReactElement[] = [
     <StackLayout key="layout-lopsided-invite" maxWidth="xl">
         <Block id="lopsided-invite" padding="sm">
             <EditableParagraph id="para-lopsided-invite" blockId="lopsided-invite">
-                Now average the scores of five dancers picked at random, over and over. Drag any bar on the
-                left to pile dancers onto different marks, and watch the pile of averages on the right
-                answer back.
+                Now average the scores of five dancers picked at random, over and over:{" "}
+                <InlineFormula
+                    latex="\frac{2 + 3 + 1 + 7 + 2}{\clr{size}{5}} = \clr{average}{3.0}"
+                    colorMap={{ size: ACCENT, average: PARTNER }}
+                    color={INK_STRONG}
+                />
+                . Drag any bar on the left to pile dancers onto different marks, and watch the pile of
+                averages on the right answer back.
             </EditableParagraph>
         </Block>
     </StackLayout>,

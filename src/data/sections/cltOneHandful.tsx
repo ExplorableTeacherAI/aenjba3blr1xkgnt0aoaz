@@ -8,14 +8,16 @@ import {
     InlineClozeInput,
     InlineClozeChoice,
     InlineLinkedHighlight,
+    InlineSpotColor,
     InlineFeedback,
 } from "@/components/atoms";
 import {
     getVariableInfo,
     clozePropsFromDefinition,
     choicePropsFromDefinition,
+    spotColorPropsFromDefinition,
 } from "../variables";
-import { INK_BG, INK_STRONG, PARTNER } from "./figures/figureStyle";
+import { ACCENT, ACCENT_BG, INK_BG, INK_STRONG, PARTNER, PARTNER_BG } from "./figures/figureStyle";
 import { TwoHandfulsFigure } from "./figures/TwoHandfulsFigure";
 
 export const cltOneHandfulBlocks: ReactElement[] = [
@@ -30,12 +32,19 @@ export const cltOneHandfulBlocks: ReactElement[] = [
     <StackLayout key="layout-one-handful-setup" maxWidth="xl">
         <Block id="one-handful-setup" padding="sm">
             <EditableParagraph id="para-one-handful-setup" blockId="one-handful-setup">
-                Suppose the true average across the whole school is 15.2 seconds, though nobody knows that
-                yet. Take five runners: 14.1, 16.8, 15.0, 13.9 and 17.2 seconds add to 77.0, so the
-                handful&apos;s average is{" "}
+                Suppose the true average across the whole school is{" "}
+                <InlineSpotColor
+                    varName="duelHighlight"
+                    {...spotColorPropsFromDefinition(getVariableInfo('duelHighlight'))}
+                >
+                    15.2 seconds
+                </InlineSpotColor>
+                , though nobody knows that yet. Take five runners: 14.1, 16.8, 15.0, 13.9 and 17.2 seconds
+                add to 77.0, so the handful&apos;s average is{" "}
                 <InlineFormula
-                    latex="\frac{77.0}{5} = \clr{average}{15.4}"
-                    colorMap={{ average: PARTNER }}
+                    latex="\frac{77.0}{\clr{size}{5}} = \clr{average}{15.4}"
+                    colorMap={{ size: ACCENT, average: PARTNER }}
+                    color={INK_STRONG}
                 />
                 {" "}seconds. Close, but not equal.
             </EditableParagraph>
@@ -44,7 +53,27 @@ export const cltOneHandfulBlocks: ReactElement[] = [
 
     <StackLayout key="layout-one-handful-invite" maxWidth="xl">
         <Block id="one-handful-invite" padding="sm">
-            <EditableParagraph id="para-one-handful-invite" blockId="one-handful-invite">Amara and Ben each grab five runners from that same school. Drag any of Amara's teal runners onto a different runner and her average shifts, while Ben's sits stubbornly somewhere else.</EditableParagraph>
+            <EditableParagraph id="para-one-handful-invite" blockId="one-handful-invite">
+                Amara and Ben each grab five runners from that same school. Drag any of{" "}
+                <InlineLinkedHighlight
+                    varName="duelHighlight"
+                    highlightId="amara"
+                    color={ACCENT}
+                    bgColor={ACCENT_BG}
+                >
+                    Amara&apos;s teal runners
+                </InlineLinkedHighlight>
+                {" "}onto a different runner and her average shifts, while{" "}
+                <InlineLinkedHighlight
+                    varName="duelHighlight"
+                    highlightId="ben"
+                    color={PARTNER}
+                    bgColor={PARTNER_BG}
+                >
+                    Ben&apos;s indigo handful
+                </InlineLinkedHighlight>
+                {" "}sits stubbornly somewhere else.
+            </EditableParagraph>
         </Block>
     </StackLayout>,
 
