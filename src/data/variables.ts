@@ -82,6 +82,40 @@ export interface VariableDefinition {
  */
 export const variableDefinitions: Record<string, VariableDefinition> = {
     // ─────────────────────────────────────────
+    // Shared colour anchors
+    // Teal = whatever the student manipulates (a handful, a sampler, a sketch),
+    // indigo = the averages that answer back, slate = the school's true average,
+    // violet = a total before it is shared out. These match the figures exactly.
+    // ─────────────────────────────────────────
+    handfulColor: {
+        defaultValue: 'handful',
+        type: 'text',
+        label: 'Handful colour',
+        description: 'Colour anchor for a handful of runners and its size',
+        color: '#62D0AD',
+    },
+    averageColor: {
+        defaultValue: 'average',
+        type: 'text',
+        label: 'Average colour',
+        description: 'Colour anchor for a handful average and the pile of averages',
+        color: '#8E90F5',
+    },
+    trueMeanColor: {
+        defaultValue: 'true average',
+        type: 'text',
+        label: 'True average colour',
+        description: "Colour anchor for the school's true average",
+        color: '#475569',
+    },
+    totalColor: {
+        defaultValue: 'total',
+        type: 'text',
+        label: 'Total colour',
+        description: 'Colour anchor for a total before it is shared out',
+        color: '#AC8BF9',
+    },
+    // ─────────────────────────────────────────
     // Section: One Handful of Runners
     // ─────────────────────────────────────────
     duelHandfulA: {
@@ -233,6 +267,16 @@ export const variableDefinitions: Record<string, VariableDefinition> = {
         correctAnswer: 'narrower and taller',
         options: ['narrower and taller', 'wider and flatter', 'exactly the same'],
         color: '#8E90F5',
+    },
+    answer_bigger_dilution_divisor: {
+        defaultValue: '',
+        type: 'select',
+        label: 'Dilution divisor',
+        description: 'Student choice of what the extra seconds are shared between',
+        placeholder: '???',
+        correctAnswer: '4',
+        options: ['1', '2', '4'],
+        color: '#62D0AD',
     },
     answer_bigger_handfuls_dilution: {
         defaultValue: '',

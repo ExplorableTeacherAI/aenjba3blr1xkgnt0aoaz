@@ -4,19 +4,33 @@ import { StackLayout } from "@/components/layouts";
 import {
     EditableH2,
     EditableParagraph,
-    InlineFormula,
-    InlineClozeInput,
     InlineClozeChoice,
     InlineLinkedHighlight,
+    InlineScrubbleNumber,
+    InlineSpotColor,
+    InlineTooltip,
+    InlineTrigger,
     InlineFeedback,
 } from "@/components/atoms";
+import { FormulaBlock } from "@/components/molecules";
 import {
     getVariableInfo,
-    clozePropsFromDefinition,
     choicePropsFromDefinition,
+    linkedHighlightPropsFromDefinition,
+    numberPropsFromDefinition,
+    scrubVarsFromDefinitions,
+    spotColorPropsFromDefinition,
 } from "../variables";
 import { ACCENT, ACCENT_BG, INK_BG, INK_STRONG, PARTNER, PARTNER_BG } from "./figures/figureStyle";
 import { AveragePourFigure } from "./figures/AveragePourFigure";
+
+const STACK_COLORS = {
+    average: '#8E90F5',
+    columnLeft: '#8E90F5',
+    columnRight: '#62CCF9',
+    total: '#AC8BF9',
+    trueMean: '#475569',
+};
 
 export const cltStackingAveragesBlocks: ReactElement[] = [
     <StackLayout key="layout-stacking-heading" maxWidth="xl">
@@ -30,8 +44,21 @@ export const cltStackingAveragesBlocks: ReactElement[] = [
     <StackLayout key="layout-stacking-setup" maxWidth="xl">
         <Block id="stacking-setup" padding="sm">
             <EditableParagraph id="para-stacking-setup" blockId="stacking-setup">
-                One handful tells you very little. A hundred handfuls tell you a lot, because now the
-                answers can be sorted into columns, one column for every quarter of a second.
+                One handful tells you very little. A hundred handfuls tell you a lot, because now the{" "}
+                <InlineSpotColor
+                    varName="averageColor"
+                    {...spotColorPropsFromDefinition(getVariableInfo('averageColor'))}
+                >
+                    answers
+                </InlineSpotColor>
+                {" "}can be sorted into{" "}
+                <InlineTooltip
+                    id="tooltip-stacking-columns"
+                    tooltip="Each column covers a quarter-second band of times, and every block in it is one handful whose average landed in that band."
+                >
+                    columns
+                </InlineTooltip>
+                , one column for every quarter of a second.
             </EditableParagraph>
         </Block>
     </StackLayout>,
@@ -39,18 +66,22 @@ export const cltStackingAveragesBlocks: ReactElement[] = [
     <StackLayout key="layout-stacking-invite" maxWidth="xl">
         <Block id="stacking-invite" padding="sm">
             <EditableParagraph id="para-stacking-invite" blockId="stacking-invite">
-                A column ten blocks tall means ten handfuls averaged somewhere inside that quarter-second.
-                Drag{" "}
-                <InlineLinkedHighlight
-                    varName="stackHighlight"
-                    highlightId="sampler"
-                    color={ACCENT}
-                    bgColor={ACCENT_BG}
-                >
-                    the teal sampler
-                </InlineLinkedHighlight>
-                {" "}to the right to tip it over, gently for a trickle of handfuls or right over for a
-                stream, and see which columns climb.
+                A column ten blocks tall means ten handfuls averaged inside that quarter-second. Drag the
+                teal sampler to the right, or hold it at{" "}
+                <InlineScrubbleNumber
+                    varName="stackTilt"
+                    {...numberPropsFromDefinition(getVariableInfo('stackTilt'))}
+                    formatValue={(v) => `${v}°`}
+                />
+                {" "}for a steady trickle, and see which columns climb. You can also{" "}
+                <InlineTrigger varName="stackTilt" value={70} icon="zap">
+                    tip it right over
+                </InlineTrigger>
+                {" "}for a stream, or{" "}
+                <InlineTrigger varName="stackTilt" value={0} icon="refresh">
+                    stand it upright
+                </InlineTrigger>
+                {" "}to stop the pour.
             </EditableParagraph>
         </Block>
     </StackLayout>,
@@ -58,6 +89,16 @@ export const cltStackingAveragesBlocks: ReactElement[] = [
     <StackLayout key="layout-stacking-visual" maxWidth="xl">
         <Block id="stacking-visual" padding="sm" hasVisualization>
             <AveragePourFigure />
+        </Block>
+    </StackLayout>,
+
+    <StackLayout key="layout-stacking-pile-formula" maxWidth="xl">
+        <Block id="stacking-pile-formula" padding="lg">
+            <FormulaBlock
+                latex="\clr{total}{\text{blocks in the whole pile}} = \val{stackPoured} \qquad \text{each block} = \text{one } \clr{average}{\text{handful average}}"
+                colorMap={STACK_COLORS}
+                variables={scrubVarsFromDefinitions(['stackPoured'])}
+            />
         </Block>
     </StackLayout>,
 
@@ -88,30 +129,28 @@ export const cltStackingAveragesBlocks: ReactElement[] = [
     </StackLayout>,
 
     <StackLayout key="layout-stacking-question-columns" maxWidth="xl">
-        <Block id="stacking-question-columns" padding="md">
+        <Block id="stacking-question-columns" padding="sm">
             <EditableParagraph id="para-stacking-question-columns" blockId="stacking-question-columns">
-                Suppose one column stands{" "}
-                <InlineFormula latex="\clr{column}{12}" colorMap={{ column: PARTNER }} color={PARTNER} />
-                {" "}blocks tall and the column beside it stands{" "}
-                <InlineFormula latex="\clr{column}{9}" colorMap={{ column: PARTNER }} color={PARTNER} />
-                . The number of handfuls that landed across those two quarter-seconds together is{" "}
-                <InlineFeedback
-                    varName="answer_stacking_two_columns"
-                    correctValue="21"
-                    position="terminal"
-                    successMessage="— right, each block is one handful, so the two columns add to 21"
-                    failureMessage="— not quite."
-                    hint="One block means one handful, so the two heights simply add"
-                    reviewBlockId="stacking-invite"
-                    reviewLabel="Review how columns are read"
-                >
-                    <InlineClozeInput
-                        varName="answer_stacking_two_columns"
-                        correctAnswer="21"
-                        {...clozePropsFromDefinition(getVariableInfo('answer_stacking_two_columns'))}
-                    />
-                </InlineFeedback>.
+                Suppose one column stands 12 blocks tall and the column beside it stands 9. Work out how
+                many handfuls landed across those two quarter-seconds together.
             </EditableParagraph>
+        </Block>
+    </StackLayout>,
+
+    <StackLayout key="layout-stacking-columns-formula" maxWidth="xl">
+        <Block id="stacking-columns-formula" padding="lg">
+            <FormulaBlock
+                latex="\clr{columnLeft}{12} + \clr{columnRight}{9} = \cloze{answer_stacking_two_columns}\ \text{handfuls}"
+                colorMap={STACK_COLORS}
+                clozeInputs={{
+                    answer_stacking_two_columns: {
+                        correctAnswer: "21",
+                        placeholder: "???",
+                        color: '#AC8BF9',
+                        bgColor: 'rgba(172, 139, 249, 0.15)',
+                    },
+                }}
+            />
         </Block>
     </StackLayout>,
 
