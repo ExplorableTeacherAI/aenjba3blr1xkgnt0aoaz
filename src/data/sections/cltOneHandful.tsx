@@ -27,6 +27,19 @@ const HANDFUL_COLORS = {
     trueMean: '#475569',
 };
 
+/**
+ * The worked example, laid out one step per line and aligned on the equals
+ * sign: the five times, then the total shared out, then the truth it is being
+ * compared with.
+ */
+const WORKED_MEAN_LATEX = [
+    "\\begin{aligned}",
+    "\\clr{average}{\\text{handful average}} &= \\frac{\\clr{total}{14.1 + 16.8 + 15.0 + 13.9 + 17.2}}{\\clr{count}{5}} \\\\[8pt]",
+    "&= \\frac{\\clr{total}{77.0}}{\\clr{count}{5}} = \\clr{average}{15.4}\\ \\text{s} \\\\[12pt]",
+    "\\clr{trueMean}{\\text{true average}} &= \\clr{trueMean}{15.2}\\ \\text{s}",
+    "\\end{aligned}",
+].join(" ");
+
 export const cltOneHandfulBlocks: ReactElement[] = [
     <StackLayout key="layout-one-handful-heading" maxWidth="xl">
         <Block id="one-handful-heading" padding="md">
@@ -62,7 +75,7 @@ export const cltOneHandfulBlocks: ReactElement[] = [
     <StackLayout key="layout-one-handful-worked-formula" maxWidth="xl">
         <Block id="one-handful-worked-formula" padding="lg">
             <FormulaBlock
-                latex="\clr{average}{\text{handful average}} = \frac{\clr{total}{14.1 + 16.8 + 15.0 + 13.9 + 17.2}}{\clr{count}{5}} = \clr{average}{15.4}\ \text{s} \quad\text{against}\quad \clr{trueMean}{15.2}\ \text{s}"
+                latex={WORKED_MEAN_LATEX}
                 colorMap={HANDFUL_COLORS}
             />
         </Block>
