@@ -6,31 +6,37 @@
     "intro-promise",
     "one-handful-heading",
     "one-handful-setup",
+    "one-handful-worked-formula",
     "one-handful-invite",
     "one-handful-visual",
     "one-handful-reflect",
-    "block-1787658107368",
     "one-handful-question-next",
     "one-handful-question-mean",
+    "one-handful-mean-formula",
     "stacking-heading",
     "stacking-setup",
     "stacking-invite",
     "stacking-visual",
+    "stacking-pile-formula",
     "stacking-reflect",
     "stacking-question-columns",
+    "stacking-columns-formula",
     "stacking-question-tallest",
     "bigger-handfuls-heading",
     "bigger-handfuls-setup",
     "bigger-handfuls-invite",
     "bigger-handfuls-visual",
+    "bigger-handfuls-width-formula",
     "bigger-handfuls-reflect",
     "bigger-handfuls-question-shape",
     "bigger-handfuls-question-dilution",
+    "bigger-handfuls-dilution-formula",
     "lopsided-heading",
     "lopsided-setup",
     "lopsided-invite",
     "lopsided-visual",
     "lopsided-averages-view",
+    "lopsided-low-share-formula",
     "lopsided-reflect",
     "lopsided-question-shape",
     "lopsided-question-group-mean",
@@ -100,6 +106,18 @@
       }
     },
     {
+      "id": "layout-one-handful-worked-formula",
+      "type": "stack",
+      "columns": [
+        [
+          "one-handful-worked-formula"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
+      }
+    },
+    {
       "id": "layout-one-handful-invite",
       "type": "stack",
       "columns": [
@@ -124,23 +142,11 @@
       }
     },
     {
-      "id": "layout-block-1787658107368",
-      "type": "stack",
-      "columns": [
-        [
-          "one-handful-reflect"
-        ]
-      ],
-      "props": {
-        "maxWidth": "xl"
-      }
-    },
-    {
       "id": "layout-one-handful-reflect",
       "type": "stack",
       "columns": [
         [
-          "block-1787658107368"
+          "one-handful-reflect"
         ]
       ],
       "props": {
@@ -165,6 +171,18 @@
       "columns": [
         [
           "one-handful-question-mean"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
+      }
+    },
+    {
+      "id": "layout-one-handful-mean-formula",
+      "type": "stack",
+      "columns": [
+        [
+          "one-handful-mean-formula"
         ]
       ],
       "props": {
@@ -220,6 +238,18 @@
       }
     },
     {
+      "id": "layout-stacking-pile-formula",
+      "type": "stack",
+      "columns": [
+        [
+          "stacking-pile-formula"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
+      }
+    },
+    {
       "id": "layout-stacking-reflect",
       "type": "stack",
       "columns": [
@@ -237,6 +267,18 @@
       "columns": [
         [
           "stacking-question-columns"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
+      }
+    },
+    {
+      "id": "layout-stacking-columns-formula",
+      "type": "stack",
+      "columns": [
+        [
+          "stacking-columns-formula"
         ]
       ],
       "props": {
@@ -304,6 +346,18 @@
       }
     },
     {
+      "id": "layout-bigger-handfuls-width-formula",
+      "type": "stack",
+      "columns": [
+        [
+          "bigger-handfuls-width-formula"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
+      }
+    },
+    {
       "id": "layout-bigger-handfuls-reflect",
       "type": "stack",
       "columns": [
@@ -333,6 +387,18 @@
       "columns": [
         [
           "bigger-handfuls-question-dilution"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
+      }
+    },
+    {
+      "id": "layout-bigger-handfuls-dilution-formula",
+      "type": "stack",
+      "columns": [
+        [
+          "bigger-handfuls-dilution-formula"
         ]
       ],
       "props": {
@@ -391,6 +457,18 @@
         "gap": "lg",
         "reverse": false,
         "align": "start"
+      }
+    },
+    {
+      "id": "layout-lopsided-low-share-formula",
+      "type": "stack",
+      "columns": [
+        [
+          "lopsided-low-share-formula"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
       }
     },
     {

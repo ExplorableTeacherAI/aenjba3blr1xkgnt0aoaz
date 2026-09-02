@@ -4,18 +4,27 @@ import { StackLayout } from "@/components/layouts";
 import {
     EditableH2,
     EditableParagraph,
-    InlineClozeInput,
     InlineClozeChoice,
     InlineLinkedHighlight,
+    InlineSpotColor,
+    InlineTooltip,
     InlineFeedback,
 } from "@/components/atoms";
+import { FormulaBlock } from "@/components/molecules";
 import {
     getVariableInfo,
-    clozePropsFromDefinition,
     choicePropsFromDefinition,
     linkedHighlightPropsFromDefinition,
+    spotColorPropsFromDefinition,
 } from "../variables";
 import { TwoHandfulsFigure } from "./figures/TwoHandfulsFigure";
+
+const HANDFUL_COLORS = {
+    average: '#8E90F5',
+    total: '#AC8BF9',
+    count: '#62D0AD',
+    trueMean: '#475569',
+};
 
 export const cltOneHandfulBlocks: ReactElement[] = [
     <StackLayout key="layout-one-handful-heading" maxWidth="xl">
@@ -29,28 +38,61 @@ export const cltOneHandfulBlocks: ReactElement[] = [
     <StackLayout key="layout-one-handful-setup" maxWidth="xl">
         <Block id="one-handful-setup" padding="sm">
             <EditableParagraph id="para-one-handful-setup" blockId="one-handful-setup">
-                Suppose the true average across the whole school is 15.2 seconds, though nobody knows that
-                yet. Take five runners: 14.1, 16.8, 15.0, 13.9 and 17.2 seconds add to 77.0, so their
-                average is 15.4 seconds. Close, but not equal.
+                Suppose the{" "}
+                <InlineSpotColor
+                    varName="trueMeanColor"
+                    {...spotColorPropsFromDefinition(getVariableInfo('trueMeanColor'))}
+                >
+                    true average
+                </InlineSpotColor>
+                {" "}across the whole school is 15.2 seconds, though nobody knows that yet. Five runners
+                give a{" "}
+                <InlineSpotColor
+                    varName="totalColor"
+                    {...spotColorPropsFromDefinition(getVariableInfo('totalColor'))}
+                >
+                    total
+                </InlineSpotColor>
+                {" "}of 77.0 seconds, and sharing that between them lands close, but not equal.
             </EditableParagraph>
+        </Block>
+    </StackLayout>,
+
+    <StackLayout key="layout-one-handful-worked-formula" maxWidth="xl">
+        <Block id="one-handful-worked-formula" padding="lg">
+            <FormulaBlock
+                latex="\clr{average}{\text{handful average}} = \frac{\clr{total}{14.1 + 16.8 + 15.0 + 13.9 + 17.2}}{\clr{count}{5}} = \clr{average}{15.4}\ \text{s} \quad\text{against}\quad \clr{trueMean}{15.2}\ \text{s}"
+                colorMap={HANDFUL_COLORS}
+            />
         </Block>
     </StackLayout>,
 
     <StackLayout key="layout-one-handful-invite" maxWidth="xl">
         <Block id="one-handful-invite" padding="sm">
-            <EditableParagraph id="para-one-handful-invite" blockId="one-handful-invite">Amara and Ben each grab five runners from that same school. Drag any of Amara's teal runners onto a different runner and her average shifts, while Ben's sits stubbornly somewhere else.</EditableParagraph>
+            <EditableParagraph id="para-one-handful-invite" blockId="one-handful-invite">
+                <InlineSpotColor
+                    varName="handfulColor"
+                    {...spotColorPropsFromDefinition(getVariableInfo('handfulColor'))}
+                >
+                    Amara
+                </InlineSpotColor>
+                {" "}and{" "}
+                <InlineSpotColor
+                    varName="averageColor"
+                    {...spotColorPropsFromDefinition(getVariableInfo('averageColor'))}
+                >
+                    Ben
+                </InlineSpotColor>
+                {" "}each grab five runners from that same school. Drag any of Amara&apos;s teal runners
+                onto a different runner and her average shifts, while Ben&apos;s sits stubbornly somewhere
+                else.
+            </EditableParagraph>
         </Block>
     </StackLayout>,
 
     <StackLayout key="layout-one-handful-visual" maxWidth="xl">
         <Block id="one-handful-visual" padding="sm" hasVisualization>
             <TwoHandfulsFigure />
-        </Block>
-    </StackLayout>,
-
-    <StackLayout key="layout-block-1787658107368" maxWidth="xl">
-        <Block id="block-1787658107368" padding="sm">
-            <EditableParagraph id="para-block-1787658107368" blockId="block-1787658107368">jfjjgg  </EditableParagraph>
         </Block>
     </StackLayout>,
 
@@ -66,6 +108,13 @@ export const cltOneHandfulBlocks: ReactElement[] = [
                 >
                     the school&apos;s true average
                 </InlineLinkedHighlight>
+                . That gap between a handful and the truth is called{" "}
+                <InlineTooltip
+                    id="tooltip-one-handful-sampling-variation"
+                    tooltip="Sampling variation: two honest samples from the same group rarely give exactly the same answer."
+                >
+                    sampling variation
+                </InlineTooltip>
                 . Can you make either one land on 15.2 exactly?
             </EditableParagraph>
         </Block>
@@ -126,26 +175,28 @@ export const cltOneHandfulBlocks: ReactElement[] = [
     </StackLayout>,
 
     <StackLayout key="layout-one-handful-question-mean" maxWidth="xl">
-        <Block id="one-handful-question-mean" padding="md">
+        <Block id="one-handful-question-mean" padding="sm">
             <EditableParagraph id="para-one-handful-question-mean" blockId="one-handful-question-mean">
-                A different handful, this time of four sprinters, clocks 13.6, 15.4, 16.2 and 14.8 seconds,
-                so the average of that handful is{" "}
-                <InlineFeedback
-                    varName="answer_one_handful_mean"
-                    correctValue={["15", "15.0"]}
-                    position="terminal"
-                    successMessage="— exactly, 60.0 seconds shared between four runners"
-                    failureMessage="— almost."
-                    hint="Add the four times first, then split the total four ways"
-                >
-                    <InlineClozeInput
-                        varName="answer_one_handful_mean"
-                        correctAnswer={["15", "15.0"]}
-                        {...clozePropsFromDefinition(getVariableInfo('answer_one_handful_mean'))}
-                    />
-                </InlineFeedback>
-                {" "}seconds.
+                A different handful, this time of four sprinters, clocks 13.6, 15.4, 16.2 and 14.8 seconds.
+                Fill in what their handful average comes to.
             </EditableParagraph>
+        </Block>
+    </StackLayout>,
+
+    <StackLayout key="layout-one-handful-mean-formula" maxWidth="xl">
+        <Block id="one-handful-mean-formula" padding="lg">
+            <FormulaBlock
+                latex="\clr{average}{\text{handful average}} = \frac{\clr{total}{13.6 + 15.4 + 16.2 + 14.8}}{\clr{count}{4}} = \cloze{answer_one_handful_mean}\ \text{s}"
+                colorMap={HANDFUL_COLORS}
+                clozeInputs={{
+                    answer_one_handful_mean: {
+                        correctAnswer: "15 | 15.0",
+                        placeholder: "???",
+                        color: '#8E90F5',
+                        bgColor: 'rgba(142, 144, 245, 0.15)',
+                    },
+                }}
+            />
         </Block>
     </StackLayout>,
 ];

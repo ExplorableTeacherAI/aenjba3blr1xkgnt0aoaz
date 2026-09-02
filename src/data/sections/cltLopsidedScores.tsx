@@ -7,15 +7,26 @@ import {
     InlineClozeInput,
     InlineClozeChoice,
     InlineLinkedHighlight,
+    InlineSpotColor,
+    InlineTooltip,
     InlineFeedback,
 } from "@/components/atoms";
+import { FormulaBlock } from "@/components/molecules";
 import {
     getVariableInfo,
     clozePropsFromDefinition,
     choicePropsFromDefinition,
     linkedHighlightPropsFromDefinition,
+    scrubVarsFromDefinitions,
+    spotColorPropsFromDefinition,
 } from "../variables";
 import { AuditionScoresFigure, AuditionAveragesFigure } from "./figures/AuditionLinkedFigures";
+
+const AUDITION_COLORS = {
+    scores: '#62D0AD',
+    averages: '#8E90F5',
+    trueMean: '#475569',
+};
 
 export const cltLopsidedScoresBlocks: ReactElement[] = [
     <StackLayout key="layout-lopsided-heading" maxWidth="xl">
@@ -30,8 +41,22 @@ export const cltLopsidedScoresBlocks: ReactElement[] = [
         <Block id="lopsided-setup" padding="sm">
             <EditableParagraph id="para-lopsided-setup" blockId="lopsided-setup">
                 Auditions for the school show are scored out of ten. Most dancers score low, a few score
-                very high, so the scores bunch hard against the left and trail away to the right. Nothing
-                bell-shaped about that at all.
+                very high, so the{" "}
+                <InlineSpotColor
+                    varName="handfulColor"
+                    {...spotColorPropsFromDefinition(getVariableInfo('handfulColor'))}
+                >
+                    scores
+                </InlineSpotColor>
+                {" "}bunch hard against the left and trail away to the right. That lopsided shape has a
+                name:{" "}
+                <InlineTooltip
+                    id="tooltip-lopsided-skewed"
+                    tooltip="Skewed: most of the values crowd against one end, with a long tail stretching away to the other."
+                >
+                    skewed
+                </InlineTooltip>
+                , and there is nothing bell-shaped about it at all.
             </EditableParagraph>
         </Block>
     </StackLayout>,
@@ -40,8 +65,14 @@ export const cltLopsidedScoresBlocks: ReactElement[] = [
         <Block id="lopsided-invite" padding="sm">
             <EditableParagraph id="para-lopsided-invite" blockId="lopsided-invite">
                 Now average the scores of five dancers picked at random, over and over. Drag any bar on the
-                left to pile dancers onto different marks, and watch the pile of averages on the right
-                answer back.
+                left to pile dancers onto different marks, and watch the pile of{" "}
+                <InlineSpotColor
+                    varName="averageColor"
+                    {...spotColorPropsFromDefinition(getVariableInfo('averageColor'))}
+                >
+                    averages
+                </InlineSpotColor>
+                {" "}on the right answer back.
             </EditableParagraph>
         </Block>
     </StackLayout>,
@@ -54,6 +85,16 @@ export const cltLopsidedScoresBlocks: ReactElement[] = [
             <AuditionAveragesFigure />
         </Block>
     </SplitLayout>,
+
+    <StackLayout key="layout-lopsided-low-share-formula" maxWidth="xl">
+        <Block id="lopsided-low-share-formula" padding="lg">
+            <FormulaBlock
+                latex="\clr{scores}{\text{dancers scoring 3 or less}} = \val{auditionLowShare}\% \qquad \clr{averages}{\text{their averages}} = \text{still a bell}"
+                colorMap={AUDITION_COLORS}
+                variables={scrubVarsFromDefinitions(['auditionLowShare'])}
+            />
+        </Block>
+    </StackLayout>,
 
     <StackLayout key="layout-lopsided-reflect" maxWidth="xl">
         <Block id="lopsided-reflect" padding="sm">
