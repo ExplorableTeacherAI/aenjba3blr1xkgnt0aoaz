@@ -13,8 +13,8 @@ import {
     getVariableInfo,
     clozePropsFromDefinition,
     choicePropsFromDefinition,
-    linkedHighlightPropsFromDefinition,
 } from "../variables";
+import { ACCENT, ACCENT_BG, INK_BG, INK_STRONG, PARTNER, PARTNER_BG } from "./figures/figureStyle";
 import { AuditionScoresFigure, AuditionAveragesFigure } from "./figures/AuditionLinkedFigures";
 
 export const cltLopsidedScoresBlocks: ReactElement[] = [
@@ -62,7 +62,8 @@ export const cltLopsidedScoresBlocks: ReactElement[] = [
                 <InlineLinkedHighlight
                     varName="auditionHighlight"
                     highlightId="scores"
-                    {...linkedHighlightPropsFromDefinition(getVariableInfo('auditionHighlight'))}
+                    color={ACCENT}
+                    bgColor={ACCENT_BG}
                 >
                     the scores
                 </InlineLinkedHighlight>
@@ -70,7 +71,8 @@ export const cltLopsidedScoresBlocks: ReactElement[] = [
                 <InlineLinkedHighlight
                     varName="auditionHighlight"
                     highlightId="averages"
-                    {...linkedHighlightPropsFromDefinition(getVariableInfo('auditionHighlight'))}
+                    color={PARTNER}
+                    bgColor={PARTNER_BG}
                 >
                     the pile of averages
                 </InlineLinkedHighlight>
@@ -78,7 +80,8 @@ export const cltLopsidedScoresBlocks: ReactElement[] = [
                 <InlineLinkedHighlight
                     varName="auditionHighlight"
                     highlightId="meanLine"
-                    {...linkedHighlightPropsFromDefinition(getVariableInfo('auditionHighlight'))}
+                    color={INK_STRONG}
+                    bgColor={INK_BG}
                 >
                     the average score
                 </InlineLinkedHighlight>

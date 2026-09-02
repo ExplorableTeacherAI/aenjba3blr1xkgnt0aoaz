@@ -28,3 +28,11 @@ export const clampLabelX = (
     const half = (text.length * fontSize * 0.6) / 2;
     return clampNumber(x, pad + half, viewBoxWidth - pad - half);
 };
+
+/**
+ * Background tints for inline components, so a phrase in the prose carries the
+ * same identity as the element it points at in the figure.
+ */
+export const ACCENT_BG = "rgba(98, 208, 173, 0.2)";
+export const PARTNER_BG = "rgba(142, 144, 245, 0.2)";
+export const INK_BG = "rgba(71, 85, 105, 0.15)";

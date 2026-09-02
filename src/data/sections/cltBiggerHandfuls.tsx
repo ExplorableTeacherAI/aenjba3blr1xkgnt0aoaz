@@ -13,8 +13,8 @@ import {
     getVariableInfo,
     clozePropsFromDefinition,
     choicePropsFromDefinition,
-    linkedHighlightPropsFromDefinition,
 } from "../variables";
+import { ACCENT, ACCENT_BG, INK_BG, INK_STRONG, PARTNER, PARTNER_BG } from "./figures/figureStyle";
 import { SketchThePileFigure } from "./figures/SketchThePileFigure";
 
 export const cltBiggerHandfulsBlocks: ReactElement[] = [
@@ -53,7 +53,8 @@ export const cltBiggerHandfulsBlocks: ReactElement[] = [
                 <InlineLinkedHighlight
                     varName="sketchHighlight"
                     highlightId="sketch"
-                    {...linkedHighlightPropsFromDefinition(getVariableInfo('sketchHighlight'))}
+                    color={ACCENT}
+                    bgColor={ACCENT_BG}
                 >
                     Your sketch
                 </InlineLinkedHighlight>
@@ -61,7 +62,8 @@ export const cltBiggerHandfulsBlocks: ReactElement[] = [
                 <InlineLinkedHighlight
                     varName="sketchHighlight"
                     highlightId="pile"
-                    {...linkedHighlightPropsFromDefinition(getVariableInfo('sketchHighlight'))}
+                    color={PARTNER}
+                    bgColor={PARTNER_BG}
                 >
                     the real pile
                 </InlineLinkedHighlight>
@@ -70,7 +72,8 @@ export const cltBiggerHandfulsBlocks: ReactElement[] = [
                 <InlineLinkedHighlight
                     varName="sketchHighlight"
                     highlightId="trueAverage"
-                    {...linkedHighlightPropsFromDefinition(getVariableInfo('sketchHighlight'))}
+                    color={INK_STRONG}
+                    bgColor={INK_BG}
                 >
                     the school&apos;s average
                 </InlineLinkedHighlight>

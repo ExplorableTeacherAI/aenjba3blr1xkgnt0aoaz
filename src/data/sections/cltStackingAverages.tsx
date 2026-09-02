@@ -13,8 +13,8 @@ import {
     getVariableInfo,
     clozePropsFromDefinition,
     choicePropsFromDefinition,
-    linkedHighlightPropsFromDefinition,
 } from "../variables";
+import { INK_BG, INK_STRONG, PARTNER, PARTNER_BG } from "./figures/figureStyle";
 import { AveragePourFigure } from "./figures/AveragePourFigure";
 
 export const cltStackingAveragesBlocks: ReactElement[] = [
@@ -58,7 +58,8 @@ export const cltStackingAveragesBlocks: ReactElement[] = [
                 <InlineLinkedHighlight
                     varName="stackHighlight"
                     highlightId="trueAverage"
-                    {...linkedHighlightPropsFromDefinition(getVariableInfo('stackHighlight'))}
+                    color={INK_STRONG}
+                    bgColor={INK_BG}
                 >
                     the school&apos;s true average
                 </InlineLinkedHighlight>
@@ -66,7 +67,8 @@ export const cltStackingAveragesBlocks: ReactElement[] = [
                 <InlineLinkedHighlight
                     varName="stackHighlight"
                     highlightId="middle"
-                    {...linkedHighlightPropsFromDefinition(getVariableInfo('stackHighlight'))}
+                    color={PARTNER}
+                    bgColor={PARTNER_BG}
                 >
                     the middle columns
                 </InlineLinkedHighlight>

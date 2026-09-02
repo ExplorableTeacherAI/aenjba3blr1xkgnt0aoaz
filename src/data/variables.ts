@@ -177,7 +177,7 @@ export const variableDefinitions: Record<string, VariableDefinition> = {
         description: 'Student answer for the combined height of two neighbouring columns',
         placeholder: '???',
         correctAnswer: '21',
-        color: '#62D0AD',
+        color: '#8E90F5',
     },
     answer_stacking_tallest: {
         defaultValue: '',
@@ -241,7 +241,7 @@ export const variableDefinitions: Record<string, VariableDefinition> = {
         description: 'Student answer for how much one slow runner shifts a handful average',
         placeholder: '???',
         correctAnswer: ['1', '1.0'],
-        color: '#62D0AD',
+        color: '#8E90F5',
     },
     // ─────────────────────────────────────────
     // Section: Lopsided Scores, Bell-Shaped Averages
@@ -298,7 +298,7 @@ export const variableDefinitions: Record<string, VariableDefinition> = {
         description: 'Student answer for the average of five given audition scores',
         placeholder: '???',
         correctAnswer: ['6', '6.0'],
-        color: '#62D0AD',
+        color: '#8E90F5',
     },
     answer_one_handful_mean: {
         defaultValue: '',
@@ -307,7 +307,7 @@ export const variableDefinitions: Record<string, VariableDefinition> = {
         description: 'Student answer for the average of four given sprint times',
         placeholder: '???',
         correctAnswer: ['15', '15.0'],
-        color: '#62D0AD',
+        color: '#8E90F5',
     },
 
     // ========================================

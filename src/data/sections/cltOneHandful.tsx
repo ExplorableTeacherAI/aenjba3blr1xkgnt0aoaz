@@ -4,6 +4,7 @@ import { StackLayout } from "@/components/layouts";
 import {
     EditableH2,
     EditableParagraph,
+    InlineFormula,
     InlineClozeInput,
     InlineClozeChoice,
     InlineLinkedHighlight,
@@ -13,8 +14,8 @@ import {
     getVariableInfo,
     clozePropsFromDefinition,
     choicePropsFromDefinition,
-    linkedHighlightPropsFromDefinition,
 } from "../variables";
+import { INK_BG, INK_STRONG, PARTNER } from "./figures/figureStyle";
 import { TwoHandfulsFigure } from "./figures/TwoHandfulsFigure";
 
 export const cltOneHandfulBlocks: ReactElement[] = [
@@ -30,8 +31,13 @@ export const cltOneHandfulBlocks: ReactElement[] = [
         <Block id="one-handful-setup" padding="sm">
             <EditableParagraph id="para-one-handful-setup" blockId="one-handful-setup">
                 Suppose the true average across the whole school is 15.2 seconds, though nobody knows that
-                yet. Take five runners: 14.1, 16.8, 15.0, 13.9 and 17.2 seconds add to 77.0, so their
-                average is 15.4 seconds. Close, but not equal.
+                yet. Take five runners: 14.1, 16.8, 15.0, 13.9 and 17.2 seconds add to 77.0, so the
+                handful&apos;s average is{" "}
+                <InlineFormula
+                    latex="\frac{77.0}{5} = \clr{average}{15.4}"
+                    colorMap={{ average: PARTNER }}
+                />
+                {" "}seconds. Close, but not equal.
             </EditableParagraph>
         </Block>
     </StackLayout>,
@@ -56,7 +62,8 @@ export const cltOneHandfulBlocks: ReactElement[] = [
                 <InlineLinkedHighlight
                     varName="duelHighlight"
                     highlightId="trueAverage"
-                    {...linkedHighlightPropsFromDefinition(getVariableInfo('duelHighlight'))}
+                    color={INK_STRONG}
+                    bgColor={INK_BG}
                 >
                     the school&apos;s true average
                 </InlineLinkedHighlight>
