@@ -1,1 +1,0 @@
-const m="#64748B",N="#475569",A="#94A3B8",l="#62D0AD",r="#8E90F5",e=(s,t,a)=>Math.min(Math.max(s,t),a),O=s=>`${s.toFixed(1)} s`,T=(s,t,a,c,o=12)=>{const n=t.length*o*.6/2;return e(s,c+n,a-c-n)};export{l as A,m as I,r as P,N as a,A as b,T as c,O as f};
