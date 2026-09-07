@@ -2,7 +2,7 @@
   "name": "mathvibe",
   "private": true,
   "version": "1.0.0",
-  "homepage": "https://c2-full-new.mathvibe.space/",
+  "homepage": "https://c2-full.mathvibe.space/",
   "type": "module",
   "scripts": {
     "dev": "vite",
